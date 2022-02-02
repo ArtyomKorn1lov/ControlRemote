@@ -10,7 +10,7 @@ namespace Infrastructure.Repositories
 {
     public class EmployerRepository : IEmployerRepository
     {
-        public Task Create(Employer employer)
+        public Task Create(Manager employer)
         {
             throw new NotImplementedException();
         }
@@ -20,17 +20,17 @@ namespace Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<List<Employer>> GetAll()
+        public Task<List<Manager>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<Employer> GetById(int id)
+        public Task<Manager> GetById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Task Update(Employer employer)
+        public Task Update(Manager employer)
         {
             throw new NotImplementedException();
         }
