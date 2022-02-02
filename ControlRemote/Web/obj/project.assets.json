@@ -1,11 +1,69 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Application.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      },
+      "Infrastructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "Application": "1.0.0",
+          "Domain": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Infrastructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Infrastructure.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Application/1.0.0": {
+      "type": "project",
+      "path": "../Application/Application.csproj",
+      "msbuildProject": "../Application/Application.csproj"
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    },
+    "Infrastructure/1.0.0": {
+      "type": "project",
+      "path": "../Infrastructure/Infrastructure.csproj",
+      "msbuildProject": "../Infrastructure/Infrastructure.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "Application >= 1.0.0",
+      "Domain >= 1.0.0",
+      "Infrastructure >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Duke\\.nuget\\packages\\": {}
@@ -33,7 +91,17 @@
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj": {
+              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj"
+            },
+            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj"
+            },
+            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
