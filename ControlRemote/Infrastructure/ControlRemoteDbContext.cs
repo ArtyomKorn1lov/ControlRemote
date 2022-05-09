@@ -20,7 +20,7 @@ namespace Infrastructure
 
             builder.ApplyConfiguration(new ActionPointConfiguration());
             builder.ApplyConfiguration(new EmployerConfiguration());
-            builder.ApplyConfiguration(new MangerConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
         }
     }
 }

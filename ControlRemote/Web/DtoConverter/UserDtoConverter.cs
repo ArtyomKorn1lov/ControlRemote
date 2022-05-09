@@ -9,33 +9,35 @@ namespace Web.DtoConverter
 {
     public static class UserDtoConverter
     {
-        public static UserDto ConvertToUserDto(Manager manager)
+        public static UserDto ConvertToUserDto(User user)
         {
-            if(manager == null)
+            if(user == null)
             {
                 return null;
             }
             return new UserDto
             {
-                Id = manager.Id,
-                Name = manager.Name,
-                Login = manager.Login,
-                Password = manager.Password
+                Id = user.Id,
+                Name = user.Name,
+                Login = user.Login,
+                Password = user.Password,
+                Role = user.Role
             };
         }
-        public static Manager ConvertToUserEntiy(UserDto userDto)
+        public static User ConvertToUserEntiy(UserDto userDto)
         {
             if(userDto == null)
             {
                 return null;
             }
-            return new Manager
+            return new User
             {
                 Id = userDto.Id,
                 Name = userDto.Name,
                 Login = userDto.Login,
                 Password = userDto.Password,
-                Employers = null,
+                Role = userDto.Role,
+                Employers = null
             };
         }
     }

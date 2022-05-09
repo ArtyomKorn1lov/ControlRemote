@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,12 @@ namespace Web.Controllers
     public class AccountController : Controller
     {
         private ControlRemoteDbContext _controlRemoteDbContext;
+        public IConfiguration _configuration { get; }
 
-        public AccountController(ControlRemoteDbContext controlRemoteDbContext)
+        public AccountController(ControlRemoteDbContext controlRemoteDbContext, IConfiguration configuration)
         {
             _controlRemoteDbContext = controlRemoteDbContext;
+            _configuration = configuration;
         }
 
         [HttpPost("login")]
@@ -32,25 +35,31 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Manager manager = await _controlRemoteDbContext.Set<Manager>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
-                UserDto user = UserDtoConverter.ConvertToUserDto(manager);
-                if (user != null)
+                if(model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
                 {
-                    await Authenticate(model.Login); // аутентификация
+                    await Authenticate(_configuration.GetConnectionString("AdminLogin"), _configuration.GetConnectionString("AdminPassword"));
+                    return Ok("success");
+                }
+                User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
+                if (userDto != null)
+                {
+                    await Authenticate(model.Login, userDto.Role); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return Ok("success");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return View(model);
+            return BadRequest("error");
         }
 
-        private async Task Authenticate(string userName)
+        private async Task Authenticate(string userName, string role)
         {
             // создаем один claim
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, userName)
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
             };
             // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
@@ -64,29 +73,36 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                Manager manager = await _controlRemoteDbContext.Set<Manager>().FirstOrDefaultAsync(u => u.Login == model.Login);
-                UserDto user = UserDtoConverter.ConvertToUserDto(manager);
-                if (user == null)
+                User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login);
+                UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
+                if (userDto == null)
                 {
                     // добавляем пользователя в бд
-                    Manager new_user = UserDtoConverter.ConvertToUserEntiy(user);
-                    _controlRemoteDbContext.Set<Manager>().Add(new_user);
+                    User new_user = UserDtoConverter.ConvertToUserEntiy(userDto);
+                    _controlRemoteDbContext.Set<User>().Add(new_user);
                     await _controlRemoteDbContext.SaveChangesAsync();
 
-                    await Authenticate(model.Login); // аутентификация
+                    await Authenticate(model.Login, new_user.Role); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return Ok("success");
                 }
-                else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return View(model);
+            return BadRequest("error");
         }
 
+        [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Account");
+            return Ok("success");
+        }
+
+        [HttpGet("is-authorized")]
+        [ValidateAntiForgeryToken]
+        public string IsUserAuthorized()
+        {
+            return HttpContext.User.Identity.AuthenticationType;
         }
     }
 }
