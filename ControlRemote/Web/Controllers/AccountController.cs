@@ -31,14 +31,14 @@ namespace Web.Controllers
 
         [HttpPost("login")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginModel model)
+        public async Task<string> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 if(model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
                 {
                     await Authenticate(_configuration.GetConnectionString("AdminLogin"), _configuration.GetConnectionString("AdminPassword"));
-                    return Ok("success");
+                    return "success";
                 }
                 User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
                 UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
@@ -46,11 +46,11 @@ namespace Web.Controllers
                 {
                     await Authenticate(model.Login, userDto.Role); // аутентификация
 
-                    return Ok("success");
+                    return "success";
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return BadRequest("error");
+            return "error";
         }
 
         private async Task Authenticate(string userName, string role)
@@ -69,7 +69,7 @@ namespace Web.Controllers
 
         [HttpPost("register")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(RegisterModel model)
+        public async Task<string> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -84,18 +84,18 @@ namespace Web.Controllers
 
                     await Authenticate(model.Login, new_user.Role); // аутентификация
 
-                    return Ok("success");
+                    return "success";
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return BadRequest("error");
+            return "error";
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<string> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok("success");
+            return "success";
         }
 
         [HttpGet("is-authorized")]
