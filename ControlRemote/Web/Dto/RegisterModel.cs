@@ -8,12 +8,10 @@ namespace Web.Dto
 {
     public class RegisterModel
     {
+        public string Name { get; set; }
         public string Login { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        public string ConfirmPassword { get; set; }
     }
 }

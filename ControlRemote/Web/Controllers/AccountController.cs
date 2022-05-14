@@ -37,7 +37,7 @@ namespace Web.Controllers
             {
                 if(model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
                 {
-                    await Authenticate(_configuration.GetConnectionString("AdminLogin"), _configuration.GetConnectionString("AdminPassword"));
+                    await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
                     return "success";
                 }
                 User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
@@ -78,7 +78,7 @@ namespace Web.Controllers
                 if (userDto == null)
                 {
                     // добавляем пользователя в бд
-                    User new_user = UserDtoConverter.ConvertToUserEntiy(userDto);
+                    User new_user = UserDtoConverter.CreateNewUser(model);
                     _controlRemoteDbContext.Set<User>().Add(new_user);
                     await _controlRemoteDbContext.SaveChangesAsync();
 
