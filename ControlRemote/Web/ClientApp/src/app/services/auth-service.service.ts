@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { firstValueFrom } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { LoginModel } from '../dto/LoginModel';
 import { RegisterModel } from '../dto/RegisterModel';
 
@@ -11,12 +11,8 @@ export class AuthServiceService {
 
   constructor(private http: HttpClient) { }
 
-  public async Registration(user: RegisterModel): Promise<boolean> {
-    let registrationResult: Promise<string> = firstValueFrom(await this.http.post<string>(`api/account/register`, user));
-    if(registrationResult.toString() == "success") {
-      return true;
-    }
-    return false;
+  public Registration(user: RegisterModel): Observable<string> {
+    return this.http.post<string>(`api/account/register`, user);
   }
 
   public async Login(user: LoginModel): Promise<boolean> {
@@ -27,12 +23,8 @@ export class AuthServiceService {
     return false;
   }
 
-  public async IsUserAuthorized(): Promise<boolean> {
-    let authType: Promise<string> = firstValueFrom(await this.http.get<string>(`api/account/is-authorized`));
-    if(authType != null) {
-      return true;
-    }
-    return false;
+  public IsUserAuthorized(): Observable<string> {
+    return this.http.get<string>(`api/account/is-authorized`);
   } 
 
   public async LogOut(): Promise<string> {

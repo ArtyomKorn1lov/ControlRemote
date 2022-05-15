@@ -30,7 +30,6 @@ namespace Web.Controllers
         }
 
         [HttpPost("login")]
-        [ValidateAntiForgeryToken]
         public async Task<string> Login(LoginModel model)
         {
             if (ModelState.IsValid)
@@ -68,7 +67,6 @@ namespace Web.Controllers
         }
 
         [HttpPost("register")]
-        [ValidateAntiForgeryToken]
         public async Task<string> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -99,10 +97,9 @@ namespace Web.Controllers
         }
 
         [HttpGet("is-authorized")]
-        [ValidateAntiForgeryToken]
         public string IsUserAuthorized()
         {
-            return HttpContext.User.Identity.AuthenticationType;
+            return HttpContext.User.Identity.Name;
         }
     }
 }

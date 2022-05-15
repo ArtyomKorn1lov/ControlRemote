@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RegisterModel } from '../dto/RegisterModel';
-//import { AuthServiceService } from '../services/auth-service.service';
+import { AuthServiceService } from '../services/auth-service.service';
 
 @Component({
   selector: 'app-dialog-reg',
@@ -15,10 +15,10 @@ export class DialogRegComponent implements OnInit {
   public password: string | undefined;
   public confirm_password: string | undefined;
 
-  constructor(public dialogRef: MatDialogRef<DialogRegComponent>) { }
+  constructor(public dialogRef: MatDialogRef<DialogRegComponent>, private authService: AuthServiceService) { }
 
-  public async Registration(): Promise<void> {
-    /*if (this.name == undefined || this.name.trim() == '') {
+  public Registration(): void {
+    if (this.name == undefined || this.name.trim() == '') {
       alert("Введите имя пользователя");
       this.name = '';
       return;
@@ -45,13 +45,26 @@ export class DialogRegComponent implements OnInit {
       return;
     }
     var model = new RegisterModel(this.name, this.login, this.password);
-    let result = await this.authService.Registration(model);
-    if(result == true) {
-      console.log(result);
+    this.authService.Registration(model).subscribe(data => {
+      if(data == null) {
+        alert("error request");
+        //console.log("error request");
+        this.dialogRef.close();
+        return;
+      }
+      if(data == "error") {
+        alert("Некорректные логин и(или) пароль");
+        //console.log(data);
+        this.name = '';
+        this.login = '';
+        this.password = '';
+        this.confirm_password = '';
+        return;
+      }
+      //console.log(data);
       this.dialogRef.close();
-      return;
-    }
-    console.log(result);*/
+      location.reload();
+    });
   }
 
   ngOnInit(): void {
