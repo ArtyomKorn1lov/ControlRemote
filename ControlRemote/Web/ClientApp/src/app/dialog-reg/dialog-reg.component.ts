@@ -46,7 +46,7 @@ export class DialogRegComponent implements OnInit {
     }
     var model = new RegisterModel(this.name, this.login, this.password);
     this.authService.Registration(model).subscribe(data => {
-      if(data == null) {
+      /*if(data == null) {
         alert("error request");
         //console.log("error request");
         this.dialogRef.close();
@@ -60,8 +60,9 @@ export class DialogRegComponent implements OnInit {
         this.password = '';
         this.confirm_password = '';
         return;
-      }
+      }*/
       //console.log(data);
+      alert(data);
       this.dialogRef.close();
       location.reload();
     });

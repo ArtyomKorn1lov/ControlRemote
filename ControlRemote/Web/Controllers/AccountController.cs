@@ -30,14 +30,14 @@ namespace Web.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<string> Login(LoginModel model)
+        public async Task<IActionResult> Login(LoginModel model)
         {
             if (ModelState.IsValid)
             {
                 if(model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
                 {
                     await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
-                    return "success";
+                    return Ok("success");
                 }
                 User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
                 UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
@@ -45,11 +45,11 @@ namespace Web.Controllers
                 {
                     await Authenticate(model.Login, userDto.Role); // аутентификация
 
-                    return "success";
+                    return Ok("success");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return "error";
+            return BadRequest("error");
         }
 
         private async Task Authenticate(string userName, string role)
@@ -67,7 +67,7 @@ namespace Web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<string> Register(RegisterModel model)
+        public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
@@ -82,18 +82,18 @@ namespace Web.Controllers
 
                     await Authenticate(model.Login, new_user.Role); // аутентификация
 
-                    return "success";
+                    return Ok("success");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }
-            return "error";
+            return BadRequest("error");
         }
 
         [HttpPost("logout")]
-        public async Task<string> Logout()
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return "success";
+            return Ok("success");
         }
 
         [HttpGet("is-authorized")]

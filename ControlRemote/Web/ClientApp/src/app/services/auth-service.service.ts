@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
 import { firstValueFrom, Observable } from "rxjs";
 import { LoginModel } from '../dto/LoginModel';
 import { RegisterModel } from '../dto/RegisterModel';
@@ -11,8 +11,8 @@ export class AuthServiceService {
 
   constructor(private http: HttpClient) { }
 
-  public Registration(user: RegisterModel): Observable<string> {
-    return this.http.post<string>(`api/account/register`, user);
+  public Registration(user: RegisterModel) {
+    return this.http.post(`api/account/register`, user, {responseType: 'text'});
   }
 
   public async Login(user: LoginModel): Promise<boolean> {
