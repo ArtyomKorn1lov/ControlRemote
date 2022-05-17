@@ -40,5 +40,21 @@ namespace Web.DtoConverter
                 Employers = null
             };
         }
+
+        public static User CreateNewUser(RegisterModel registerModel)
+        {
+            if(registerModel == null)
+            {
+                return null;
+            }
+            return new User
+            {
+                Name = registerModel.Name,
+                Login = registerModel.Login,
+                Password = registerModel.Password,
+                Role = "user",
+                Employers = null
+            };
+        }
     }
 }

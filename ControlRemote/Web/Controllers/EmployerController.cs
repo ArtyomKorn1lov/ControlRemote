@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Web.Dto;
 
 namespace ControlRemote.Controllers
 {
@@ -27,6 +28,18 @@ namespace ControlRemote.Controllers
         public ActionResult Create()
         {
             return View();
+        }
+
+        [HttpGet("id")]
+        public EmployerDto GetAll()
+        {
+            return new EmployerDto
+            {
+                Id = 1,
+                ManagerId = 1,
+                Name = "1",
+                Login = "1"
+            };
         }
 
         // POST: UserController/Create
