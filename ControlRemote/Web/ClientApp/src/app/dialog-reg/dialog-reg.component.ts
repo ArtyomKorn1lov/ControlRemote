@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { RegisterModel } from '../dto/RegisterModel';
-import { AuthServiceService } from '../services/auth-service.service';
+import { RegisterModel } from '../Dto/RegisterModel';
+import { AuthServiceService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-dialog-reg',
@@ -46,25 +46,20 @@ export class DialogRegComponent implements OnInit {
     }
     var model = new RegisterModel(this.name, this.login, this.password);
     this.authService.Registration(model).subscribe(data => {
-      /*if(data == null) {
-        alert("error request");
-        //console.log("error request");
+      if(data == "success") {
+        console.log(data);
+        alert(data);
         this.dialogRef.close();
+        location.reload();
         return;
       }
-      if(data == "error") {
-        alert("Некорректные логин и(или) пароль");
-        //console.log(data);
-        this.name = '';
-        this.login = '';
-        this.password = '';
-        this.confirm_password = '';
-        return;
-      }*/
-      //console.log(data);
-      alert(data);
-      this.dialogRef.close();
-      location.reload();
+      alert("Некорректные логин и(или) пароль");
+      console.log(data);
+      this.name = '';
+      this.login = '';
+      this.password = '';
+      this.confirm_password = '';
+      return;
     });
   }
 

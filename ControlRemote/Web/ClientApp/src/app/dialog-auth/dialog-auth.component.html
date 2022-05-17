@@ -8,7 +8,7 @@
     <div class="auth-inputs-block">
         <input [(ngModel)]="login" class="auth-input" type="text" placeholder="Логин" maxlength="100">
         <input [(ngModel)]="password" class="auth-input" type="password" placeholder="Пароль" maxlength="100">
-        <button class="fisrt-variation-bar">
+        <button class="fisrt-variation-bar" (click)="Login()">
             <h1>Войти</h1>
         </button>
     </div>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRegComponent } from '../dialog-reg/dialog-reg.component';
-import { EmployerServiceService } from '../services/employer-service.service';
-import { AuthServiceService } from '../services/auth-service.service';
+import { EmployerServiceService } from '../Services/employer-service.service';
+import { AuthServiceService } from '../Services/auth-service.service';
 
 @Component({
   selector: 'app-main-page',
@@ -12,6 +12,7 @@ import { AuthServiceService } from '../services/auth-service.service';
 export class MainPageComponent implements OnInit {
 
   public id: number | undefined;
+  public name: string | undefined;
   public type: string | undefined;
 
   constructor(public dialog: MatDialog, private employerService: EmployerServiceService, private authService: AuthServiceService) { }
@@ -24,9 +25,24 @@ export class MainPageComponent implements OnInit {
     this.employerService.GetEmployer().subscribe(data => this.id = data.id);
   }
 
+  public LogOut(): void {
+    this.authService.LogOut().subscribe(data => {
+      if(data == "success") {
+        alert("Успешный выход");
+        console.log(data);
+        location.reload();
+        return;
+      }
+      alert("Ошибка запроса");
+      console.log(data);
+      return;
+    });
+  }
+
   ngOnInit(): void {
     this.authService.IsUserAuthorized().subscribe(data => {
-      this.type = data;
+      this.name = data.name;
+      this.type = data.type;
     });
   }
 

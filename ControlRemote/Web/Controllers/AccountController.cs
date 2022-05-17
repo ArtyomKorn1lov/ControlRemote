@@ -43,7 +43,7 @@ namespace Web.Controllers
                 UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
                 if (userDto != null)
                 {
-                    await Authenticate(model.Login, userDto.Role); // аутентификация
+                    await Authenticate(model.Login, userDto.Role);
 
                     return Ok("success");
                 }
@@ -54,15 +54,12 @@ namespace Web.Controllers
 
         private async Task Authenticate(string userName, string role)
         {
-            // создаем один claim
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
             };
-            // создаем объект ClaimsIdentity
             ClaimsIdentity id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
-            // установка аутентификационных куки
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
@@ -71,16 +68,19 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.Login == _configuration.GetConnectionString("AdminLogin"))
+                {
+                    return BadRequest("error");
+                }
                 User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login);
                 UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
                 if (userDto == null)
                 {
-                    // добавляем пользователя в бд
                     User new_user = UserDtoConverter.CreateNewUser(model);
                     _controlRemoteDbContext.Set<User>().Add(new_user);
                     await _controlRemoteDbContext.SaveChangesAsync();
 
-                    await Authenticate(model.Login, new_user.Role); // аутентификация
+                    await Authenticate(model.Login, new_user.Role);
 
                     return Ok("success");
                 }
@@ -92,14 +92,22 @@ namespace Web.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return Ok("success");
+            try
+            {
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+                return Ok("success");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
         }
 
         [HttpGet("is-authorized")]
-        public string IsUserAuthorized()
+        public AuthoriseModel IsUserAuthorized()
         {
-            return HttpContext.User.Identity.Name;
+            AuthoriseModel authorise = new AuthoriseModel(HttpContext.User.Identity.Name, HttpContext.User.Identity.AuthenticationType);
+            return authorise;
         }
     }
 }
