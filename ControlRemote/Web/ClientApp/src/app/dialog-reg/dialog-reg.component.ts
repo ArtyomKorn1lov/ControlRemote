@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RegisterModel } from '../Dto/RegisterModel';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { AccountService } from '../Services/account.service';
 
 @Component({
   selector: 'app-dialog-reg',
@@ -15,7 +15,7 @@ export class DialogRegComponent implements OnInit {
   public password: string | undefined;
   public confirm_password: string | undefined;
 
-  constructor(public dialogRef: MatDialogRef<DialogRegComponent>, private authService: AuthServiceService) { }
+  constructor(public dialogRef: MatDialogRef<DialogRegComponent>, private authService: AccountService) { }
 
   public Registration(): void {
     if (this.name == undefined || this.name.trim() == '') {

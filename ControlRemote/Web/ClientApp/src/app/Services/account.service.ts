@@ -9,25 +9,25 @@ import { UserDto } from '../Dto/UserDto';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthServiceService {
+export class AccountService {
 
   constructor(private http: HttpClient) { }
 
   public Registration(user: RegisterModel): Observable<string> {
-    return this.http.post(`api/account/register`, user, {responseType: 'text'});
+    return this.http.post(`api/account/register`, user, { responseType: 'text' });
   }
 
   public Login(user: LoginModel): Observable<string> {
-    return this.http.post(`api/account/login`, user, {responseType: 'text'});
+    return this.http.post(`api/account/login`, user, { responseType: 'text' });
   }
 
   public IsUserAuthorized(): Observable<AuthoriseModel> {
     return this.http.get<AuthoriseModel>(`api/account/is-authorized`);
-  } 
+  }
 
   public LogOut(): Observable<string> {
     var user = new UserDto(0, "", "", "", "");
-    return this.http.post(`api/account/logout`, user, {responseType: 'text'});
+    return this.http.post(`api/account/logout`, user, { responseType: 'text' });
   }
 
 }

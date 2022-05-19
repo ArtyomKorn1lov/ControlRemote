@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRegComponent } from '../dialog-reg/dialog-reg.component';
-import { EmployerServiceService } from '../Services/employer-service.service';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { EmployerService } from '../Services/employer-service.service';
+import { AccountService } from '../Services/account.service';
 
 @Component({
   selector: 'app-main-page',
@@ -13,9 +13,8 @@ export class MainPageComponent implements OnInit {
 
   public id: number | undefined;
   public name: string | undefined;
-  public type: string | undefined;
 
-  constructor(public dialog: MatDialog, private employerService: EmployerServiceService, private authService: AuthServiceService) { }
+  constructor(public dialog: MatDialog, private employerService: EmployerService, private authService: AccountService) { }
 
   public openRegDialog(): void {
     const dialogRef = this.dialog.open(DialogRegComponent);
@@ -42,7 +41,6 @@ export class MainPageComponent implements OnInit {
   ngOnInit(): void {
     this.authService.IsUserAuthorized().subscribe(data => {
       this.name = data.name;
-      this.type = data.type;
     });
   }
 

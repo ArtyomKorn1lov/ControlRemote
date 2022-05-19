@@ -21,35 +21,47 @@ namespace Web.Controllers
     public class AccountController : Controller
     {
         private ControlRemoteDbContext _controlRemoteDbContext;
+        private UnitOfWork _unitOfWork;
         public IConfiguration _configuration { get; }
 
-        public AccountController(ControlRemoteDbContext controlRemoteDbContext, IConfiguration configuration)
+        public AccountController(ControlRemoteDbContext controlRemoteDbContext, IConfiguration configuration, UnitOfWork unitOfWork)
         {
             _controlRemoteDbContext = controlRemoteDbContext;
             _configuration = configuration;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if(model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
+                if (ModelState.IsValid)
                 {
-                    await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
-                    return Ok("success");
+                    if (IsUserAuthorized() != null)
+                    {
+                        BadRequest("authorisze");
+                    }
+                    if (model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
+                    {
+                        await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
+                        return Ok("success");
+                    }
+                    User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
+                    UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
+                    if (userDto != null)
+                    {
+                        await Authenticate(model.Login, userDto.Role);
+                        return Ok("success");
+                    }
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
-                User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
-                UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
-                if (userDto != null)
-                {
-                    await Authenticate(model.Login, userDto.Role);
-
-                    return Ok("success");
-                }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                return BadRequest("error");
             }
-            return BadRequest("error");
+            catch
+            {
+                return BadRequest("error");
+            }
         }
 
         private async Task Authenticate(string userName, string role)
@@ -66,27 +78,36 @@ namespace Web.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if (model.Login == _configuration.GetConnectionString("AdminLogin"))
+                if (ModelState.IsValid)
                 {
-                    return BadRequest("error");
+                    if (IsUserAuthorized() != null)
+                    {
+                        BadRequest("authorize");
+                    }
+                    if (model.Login == _configuration.GetConnectionString("AdminLogin"))
+                    {
+                        return BadRequest("error");
+                    }
+                    User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login);
+                    UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
+                    if (userDto == null)
+                    {
+                        User new_user = UserDtoConverter.CreateNewUser(model);
+                        _controlRemoteDbContext.Set<User>().Add(new_user);
+                        await _controlRemoteDbContext.SaveChangesAsync();
+                        await Authenticate(model.Login, new_user.Role);
+                        return Ok("success");
+                    }
+                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
-                User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login);
-                UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
-                if (userDto == null)
-                {
-                    User new_user = UserDtoConverter.CreateNewUser(model);
-                    _controlRemoteDbContext.Set<User>().Add(new_user);
-                    await _controlRemoteDbContext.SaveChangesAsync();
-
-                    await Authenticate(model.Login, new_user.Role);
-
-                    return Ok("success");
-                }
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                return BadRequest("error");
             }
-            return BadRequest("error");
+            catch
+            {
+                return BadRequest("error");
+            }
         }
 
         [HttpPost("logout")]
@@ -94,6 +115,10 @@ namespace Web.Controllers
         {
             try
             {
+                if (IsUserAuthorized() == null)
+                {
+                    BadRequest("error");
+                }
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 return Ok("success");
             }
@@ -106,7 +131,7 @@ namespace Web.Controllers
         [HttpGet("is-authorized")]
         public AuthoriseModel IsUserAuthorized()
         {
-            AuthoriseModel authorise = new AuthoriseModel(HttpContext.User.Identity.Name, HttpContext.User.Identity.AuthenticationType);
+            AuthoriseModel authorise = new AuthoriseModel(HttpContext.User.Identity.Name, HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType));
             return authorise;
         }
     }

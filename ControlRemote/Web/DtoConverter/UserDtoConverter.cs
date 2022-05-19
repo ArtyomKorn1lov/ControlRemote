@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Dto;
+using Application.Command;
 
 namespace Web.DtoConverter
 {
@@ -24,20 +25,19 @@ namespace Web.DtoConverter
                 Role = user.Role
             };
         }
-        public static User ConvertToUserEntiy(UserDto userDto)
+
+        public static UserCreateCommand ConvertToUserCreateCommand(RegisterModel registerModel)
         {
-            if(userDto == null)
+            if(registerModel == null)
             {
                 return null;
             }
-            return new User
+            return new UserCreateCommand
             {
-                Id = userDto.Id,
-                Name = userDto.Name,
-                Login = userDto.Login,
-                Password = userDto.Password,
-                Role = userDto.Role,
-                Employers = null
+                Name = registerModel.Name,
+                Login = registerModel.Login,
+                Password = registerModel.Password,
+                Role = "user",
             };
         }
 

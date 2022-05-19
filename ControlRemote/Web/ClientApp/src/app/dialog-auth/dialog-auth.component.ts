@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LoginModel } from '../Dto/LoginModel';
-import { AuthServiceService } from '../Services/auth-service.service';
+import { AccountService } from '../Services/account.service';
 
 @Component({
   selector: 'app-dialog-auth',
@@ -13,7 +13,7 @@ export class DialogAuthComponent implements OnInit {
   public login: string | undefined;
   public password: string | undefined;
 
-  constructor(public dialogRef: MatDialogRef<DialogAuthComponent>, private authService: AuthServiceService) { }
+  constructor(public dialogRef: MatDialogRef<DialogAuthComponent>, private authService: AccountService) { }
 
   public Login(): void {
     if (this.login == undefined || this.login.trim() == '') {

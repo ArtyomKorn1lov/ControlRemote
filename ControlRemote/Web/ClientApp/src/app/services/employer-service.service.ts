@@ -6,7 +6,7 @@ import { EmployerDto } from '../Dto/EmployerDto';
 @Injectable({
   providedIn: 'root'
 })
-export class EmployerServiceService {
+export class EmployerService {
 
   constructor(private http: HttpClient) { }
 
