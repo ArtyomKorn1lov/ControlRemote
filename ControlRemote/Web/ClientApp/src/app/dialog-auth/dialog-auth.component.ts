@@ -35,6 +35,13 @@ export class DialogAuthComponent implements OnInit {
         location.reload();
         return;
       }
+      if(data == "authorize") {
+        alert("Пользователь уже авторизован");
+        console.log(data);
+        this.login = '';
+        this.password = '';
+        return;
+      }
       alert("Некорректные логин и(или) пароль");
       console.log(data);
       this.login = '';

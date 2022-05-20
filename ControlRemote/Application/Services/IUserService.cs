@@ -9,7 +9,7 @@ namespace Application.Services
 {
     public interface IUserService
     {
-        Task<bool> GetLoginResult(string login, string password);
+        Task<string> GetLoginResult(string login, string password);
         Task<bool> GetRegisterResult(string login);
         Task<bool> CreateUser(UserCreateCommand user);
     }

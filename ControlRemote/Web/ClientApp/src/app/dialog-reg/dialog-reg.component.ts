@@ -53,6 +53,15 @@ export class DialogRegComponent implements OnInit {
         location.reload();
         return;
       }
+      if(data == "authorize") {
+        alert("Пользователь уже авторизован");
+        console.log(data);
+        this.name = '';
+        this.login = '';
+        this.password = '';
+        this.confirm_password = '';
+      return;
+      }
       alert("Некорректные логин и(или) пароль");
       console.log(data);
       this.name = '';

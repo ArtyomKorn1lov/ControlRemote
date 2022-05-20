@@ -1,5 +1,6 @@
 ﻿using Application.Command;
 using Application.CommandConverter;
+using Domain.Entity;
 using Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,12 @@ namespace Application.Services
     public class UserService : IUserService
     {
         private IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public async Task<bool> CreateUser(UserCreateCommand user)
         {
             try
@@ -28,23 +35,24 @@ namespace Application.Services
             }
         }
 
-        public async Task<bool> GetLoginResult(string login, string password)
+        public async Task<string> GetLoginResult(string login, string password)
         {
             try
             {
-                if(login == null || password == null)
+                if (login == null || password == null)
                 {
-                    return false;
+                    return null;
                 }
-                if(await _userRepository.GetLoginModel(login, password) == null)
+                User user = await _userRepository.GetLoginModel(login, password);
+                if (user == null)
                 {
-                    return false;
+                    return null;
                 }
-                return true;
+                return user.Role;
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -56,7 +64,8 @@ namespace Application.Services
                 {
                     return false;
                 }
-                if(await _userRepository.GetRegisterModel(login) == null)
+                User user = await _userRepository.GetRegisterModel(login);
+                if (user == null)
                 {
                     return true;
                 }

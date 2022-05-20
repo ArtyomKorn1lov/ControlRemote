@@ -32,7 +32,7 @@ export class MainPageComponent implements OnInit {
         location.reload();
         return;
       }
-      alert("Ошибка запроса");
+      alert("Ошибка выхода");
       console.log(data);
       return;
     });

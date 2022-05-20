@@ -1,4 +1,7 @@
-﻿using Domain.Entity;
+﻿using Application;
+using Application.Command;
+using Application.Services;
+using Domain.Entity;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -20,15 +23,15 @@ namespace Web.Controllers
     [Route("api/account")]
     public class AccountController : Controller
     {
-        private ControlRemoteDbContext _controlRemoteDbContext;
-        private UnitOfWork _unitOfWork;
-        public IConfiguration _configuration { get; }
+        private IUnitOfWork _unitOfWork;
+        private IConfiguration _configuration { get; }
+        private IUserService _userService;
 
-        public AccountController(ControlRemoteDbContext controlRemoteDbContext, IConfiguration configuration, UnitOfWork unitOfWork)
+        public AccountController(IConfiguration configuration, IUnitOfWork unitOfWork, IUserService userService)
         {
-            _controlRemoteDbContext = controlRemoteDbContext;
             _configuration = configuration;
             _unitOfWork = unitOfWork;
+            _userService = userService;
         }
 
         [HttpPost("login")]
@@ -38,25 +41,24 @@ namespace Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (IsUserAuthorized() != null)
+                    if (IsUserAuthorized().Name != null)
                     {
-                        BadRequest("authorisze");
+                        return Ok("authorize");
                     }
                     if (model.Login == _configuration.GetConnectionString("AdminLogin") && model.Password == _configuration.GetConnectionString("AdminPassword"))
                     {
                         await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
                         return Ok("success");
                     }
-                    User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login && u.Password == model.Password);
-                    UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
-                    if (userDto != null)
+                    string result = await _userService.GetLoginResult(model.Login, model.Password); 
+                    if (result != null)
                     {
-                        await Authenticate(model.Login, userDto.Role);
+                        await Authenticate(model.Login, result);
                         return Ok("success");
                     }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
-                return BadRequest("error");
+                return Ok("error");
             }
             catch
             {
@@ -82,27 +84,25 @@ namespace Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (IsUserAuthorized() != null)
+                    if (IsUserAuthorized().Name != null)
                     {
-                        BadRequest("authorize");
+                        return Ok("authorize");
                     }
                     if (model.Login == _configuration.GetConnectionString("AdminLogin"))
                     {
-                        return BadRequest("error");
+                        return Ok("error");
                     }
-                    User user = await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == model.Login);
-                    UserDto userDto = UserDtoConverter.ConvertToUserDto(user);
-                    if (userDto == null)
+                    if (await _userService.GetRegisterResult(model.Login))
                     {
-                        User new_user = UserDtoConverter.CreateNewUser(model);
-                        _controlRemoteDbContext.Set<User>().Add(new_user);
-                        await _controlRemoteDbContext.SaveChangesAsync();
-                        await Authenticate(model.Login, new_user.Role);
+                        UserCreateCommand userCreateCommand = UserDtoConverter.ConvertToUserCreateCommand(model);
+                        await _userService.CreateUser(userCreateCommand);
+                        await _unitOfWork.Commit();
+                        await Authenticate(model.Login, userCreateCommand.Role);
                         return Ok("success");
                     }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
-                return BadRequest("error");
+                return Ok("error");
             }
             catch
             {
@@ -115,9 +115,9 @@ namespace Web.Controllers
         {
             try
             {
-                if (IsUserAuthorized() == null)
+                if (IsUserAuthorized().Name == null)
                 {
-                    BadRequest("error");
+                    return Ok("error");
                 }
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
                 return Ok("success");
