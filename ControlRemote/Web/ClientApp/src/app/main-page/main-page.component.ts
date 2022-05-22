@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRegComponent } from '../dialog-reg/dialog-reg.component';
-import { EmployerService } from '../Services/employer-service.service';
+import { EmployerService } from '../Services/employer.service';
 import { AccountService } from '../Services/account.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class MainPageComponent implements OnInit {
   public id: number | undefined;
   public name: string | undefined;
 
-  constructor(public dialog: MatDialog, private employerService: EmployerService, private authService: AccountService) { }
+  constructor(public dialog: MatDialog, private employerService: EmployerService, private accountService: AccountService) { }
 
   public openRegDialog(): void {
     const dialogRef = this.dialog.open(DialogRegComponent);
@@ -25,7 +25,7 @@ export class MainPageComponent implements OnInit {
   }
 
   public LogOut(): void {
-    this.authService.LogOut().subscribe(data => {
+    this.accountService.LogOut().subscribe(data => {
       if(data == "success") {
         alert("Успешный выход");
         console.log(data);
@@ -38,8 +38,8 @@ export class MainPageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    this.authService.IsUserAuthorized().subscribe(data => {
+  public async ngOnInit(): Promise<void> {
+    await this.accountService.IsUserAuthorized().subscribe(data => {
       this.name = data.name;
     });
   }

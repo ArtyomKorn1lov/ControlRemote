@@ -25,7 +25,7 @@ namespace Application.Services
             {
                 if (user != null)
                 {
-                    await _userRepository.CreateUser(UserCommandConverter.ConvertToUserEntity(user));
+                    await _userRepository.CreateUser(UserCommandConverter.UserCreateCommandConvertToUserEntity(user));
                 }
                 return true;
             }
@@ -74,6 +74,24 @@ namespace Application.Services
             catch
             {
                 return false;
+            }
+        }
+
+        public async Task<List<UserTransferCommand>> GetUsers()
+        {
+            try
+            {
+                List<User> usersEntity = await _userRepository.GetUsers();
+                List<UserTransferCommand> usersCommand = usersEntity.Select(data => UserCommandConverter.UserEntityConvertToUserTransferCommand(data)).ToList();
+                if(usersCommand == null)
+                {
+                    return null;
+                }
+                return usersCommand;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

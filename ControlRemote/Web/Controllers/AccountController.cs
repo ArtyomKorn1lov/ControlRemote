@@ -5,6 +5,7 @@ using Domain.Entity;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +51,7 @@ namespace Web.Controllers
                         await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
                         return Ok("success");
                     }
-                    string result = await _userService.GetLoginResult(model.Login, model.Password); 
+                    string result = await _userService.GetLoginResult(model.Login, model.Password);
                     if (result != null)
                     {
                         await Authenticate(model.Login, result);
@@ -94,7 +95,7 @@ namespace Web.Controllers
                     }
                     if (await _userService.GetRegisterResult(model.Login))
                     {
-                        UserCreateCommand userCreateCommand = UserDtoConverter.ConvertToUserCreateCommand(model);
+                        UserCreateCommand userCreateCommand = UserDtoConverter.RegisterModelConvertToUserCreateCommand(model);
                         await _userService.CreateUser(userCreateCommand);
                         await _unitOfWork.Commit();
                         await Authenticate(model.Login, userCreateCommand.Role);
@@ -133,6 +134,19 @@ namespace Web.Controllers
         {
             AuthoriseModel authorise = new AuthoriseModel(HttpContext.User.Identity.Name, HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType));
             return authorise;
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet("user-list")]
+        public async Task<List<UserDto>> GetUsers()
+        {
+            List<UserTransferCommand> usersTransferCommand = await _userService.GetUsers();
+            List<UserDto> user = usersTransferCommand.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
+            if(user == null)
+            {
+                return null;
+            }
+            return user;
         }
     }
 }

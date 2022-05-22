@@ -32,5 +32,10 @@ namespace Infrastructure.Repositories
         {
             return await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Login == login);
         }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await _controlRemoteDbContext.Set<User>().ToListAsync();
+        }
     }
 }

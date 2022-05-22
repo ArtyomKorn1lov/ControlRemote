@@ -10,7 +10,7 @@ namespace Web.DtoConverter
 {
     public static class UserDtoConverter
     {
-        public static UserDto ConvertToUserDto(User user)
+        public static UserDto UserTransferCommandConvertToUserDto(UserTransferCommand user)
         {
             if(user == null)
             {
@@ -21,12 +21,11 @@ namespace Web.DtoConverter
                 Id = user.Id,
                 Name = user.Name,
                 Login = user.Login,
-                Password = user.Password,
                 Role = user.Role
             };
         }
 
-        public static UserCreateCommand ConvertToUserCreateCommand(RegisterModel registerModel)
+        public static UserCreateCommand RegisterModelConvertToUserCreateCommand(RegisterModel registerModel)
         {
             if(registerModel == null)
             {
@@ -38,22 +37,6 @@ namespace Web.DtoConverter
                 Login = registerModel.Login,
                 Password = registerModel.Password,
                 Role = "user",
-            };
-        }
-
-        public static User CreateNewUser(RegisterModel registerModel)
-        {
-            if(registerModel == null)
-            {
-                return null;
-            }
-            return new User
-            {
-                Name = registerModel.Name,
-                Login = registerModel.Login,
-                Password = registerModel.Password,
-                Role = "user",
-                Employers = null
             };
         }
     }

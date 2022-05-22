@@ -4,7 +4,7 @@ import { firstValueFrom, Observable } from "rxjs";
 import { LoginModel } from '../Dto/LoginModel';
 import { RegisterModel } from '../Dto/RegisterModel';
 import { AuthoriseModel } from '../Dto/AuthoriseModel';
-import { UserDto } from '../Dto/UserDto';
+import { UserModel } from '../Dto/UserModel';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,11 @@ export class AccountService {
   }
 
   public LogOut(): Observable<string> {
-    var user = new UserDto(0, "", "", "", "");
+    var user = new UserModel(0, "", "", "");
     return this.http.post(`api/account/logout`, user, { responseType: 'text' });
   }
 
+  public GetUsers(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`api/account/user-list`);
+  }
 }

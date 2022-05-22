@@ -1,0 +1,51 @@
+<div class="page-selector">
+    <div class="button-block">
+        <button class="fisrt-variation-bar">
+            <h1>Поиск</h1>
+        </button>
+        <input class="auth-input" type="text" placeholder="Поиск по имени пользователя" maxlength="100">
+        <button class="second-variation-bar">
+            <h1>Создать пользователя</h1>
+        </button>
+    </div>
+    <div class="object-location">
+        <div class="object">
+            <div class="element">
+                <p>Id</p>
+            </div>
+            <div class="element">
+                <p>Имя</p>
+            </div>
+            <div class="element">
+                <p>Логин</p>
+            </div>
+            <div class="element">
+                <p>Роль</p>
+            </div>
+            <div class="element">
+                <p>О пользователе</p>
+            </div>
+        </div>
+        <div class="object-list" *ngFor="let user of users">
+            <div class="object">
+                <div class="element">
+                    <p>{{user.id}}</p>
+                </div>
+                <div class="element">
+                    <p>{{user.name}}</p>
+                </div>
+                <div class="element">
+                    <p>{{user.login}}</p>
+                </div>
+                <div class="element">
+                    <p>{{user.role}}</p>
+                </div>
+                <div class="element">
+                    <button class="table-button">
+                        <h1>Подробнее</h1>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

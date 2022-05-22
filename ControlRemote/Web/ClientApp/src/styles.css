@@ -41,6 +41,10 @@ a {
     text-decoration: none;
 }
 
+a:hover {
+    background-image: radial-gradient(ellipse farthest-corner at 50% 50%, rgba(145, 150, 161, 0.7), rgba(145, 150, 161, 0.7));
+}
+
 a {
     -ms-user-select: none;
     -moz-user-select: none;
@@ -64,13 +68,21 @@ a {
     padding: 15px;
 }
 
+.fisrt-variation-bar:hover {
+    background-image: radial-gradient(ellipse farthest-corner at 50% 50%, rgba(145, 150, 161, 0.7), rgba(145, 150, 161, 0.7));
+}
+
 .second-variation-bar {
     width: 300px;
-    background-color: #47337b;
+    background: #47337b;
     border: 3px solid #ffa200;
     border-radius: 15px;
     box-shadow: 0 0 10px;
     padding: 15px;
+}
+
+.second-variation-bar:hover {
+    background-image: radial-gradient(ellipse farthest-corner at 50% 50%, rgba(66, 66, 66, 0.7), rgba(66, 66, 66, 0.7));
 }
 
 .fisrt-variation-bar h1 {
@@ -132,6 +144,54 @@ a {
     margin-top: 15px;
 }
 
+.object-location {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+
+.object {
+    display: flex;
+    align-items: stretch;
+}
+
+.element {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border: 5px solid #ffa200;
+    background: #47337b;
+}
+
+.element p {
+    color: #ffa200;
+}
+
+.object-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.table-button {
+    width: 200px;
+    background: #ffa200;
+    border: 3px solid #ffa200;
+    border-radius: 15px;
+    box-shadow: 0 0 10px;
+    padding: 5px;
+}
+
+.table-button:hover {
+    background-image: radial-gradient(ellipse farthest-corner at 50% 50%, rgba(145, 150, 161, 0.7), rgba(145, 150, 161, 0.7));
+}
+
+.table-button h1 {
+    color: #47337b;
+}
 
 /*html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
