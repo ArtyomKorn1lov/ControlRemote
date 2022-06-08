@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { RegisterModel } from '../Dto/RegisterModel';
 import { AccountService } from '../Services/account.service';
+import { UserCreateModel } from '../Dto/UserCreateModel';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dialog-reg',
-  templateUrl: './dialog-reg.component.html',
-  styleUrls: ['./dialog-reg.component.css']
+  selector: 'app-user-create',
+  templateUrl: './user-create.component.html',
+  styleUrls: ['./user-create.component.css']
 })
-export class DialogRegComponent implements OnInit {
+export class UserCreateComponent implements OnInit {
 
   public name: string | undefined;
   public login: string | undefined;
   public password: string | undefined;
   public confirm_password: string | undefined;
+  public status: string = "user";
+  private targerRoute = "/user-list";
 
-  constructor(public dialogRef: MatDialogRef<DialogRegComponent>, private authService: AccountService) { }
+  constructor(private accountService: AccountService, private router: Router) { }
 
-  public Registration(): void {
+  public CreateUser(): void {
     if (this.name == undefined || this.name.trim() == '') {
       alert("Введите имя пользователя");
       this.name = '';
@@ -44,22 +46,22 @@ export class DialogRegComponent implements OnInit {
       this.confirm_password = '';
       return;
     }
-    var model = new RegisterModel(this.name, this.login, this.password);
-    this.authService.Registration(model).subscribe(data => {
+    var model = new UserCreateModel(this.name, this.login, this.password, this.status);
+    this.accountService.CreateUser(model).subscribe(data => {
       if(data == "success") {
         console.log(data);
         alert(data);
-        this.dialogRef.close();
-        location.reload();
+        this.router.navigateByUrl(this.targerRoute);
         return;
       }
-      if(data == "authorize") {
-        alert("Пользователь уже авторизован");
+      if(data == "create") {
+        alert("Пользователь с данным логином уже создан");
         console.log(data);
         this.name = '';
         this.login = '';
         this.password = '';
         this.confirm_password = '';
+        this.status = "user";
         return;
       }
       alert("Некорректные логин и(или) пароль");
@@ -68,6 +70,7 @@ export class DialogRegComponent implements OnInit {
       this.login = '';
       this.password = '';
       this.confirm_password = '';
+      this.status = "user";
       return;
     });
   }

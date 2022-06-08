@@ -13,5 +13,9 @@ namespace Application.Services
         Task<bool> GetRegisterResult(string login);
         Task<bool> CreateUser(UserCreateCommand user);
         Task<List<UserTransferCommand>> GetUsers();
+        Task<bool> UpdateUser(UserUpdateCommand user);
+        Task<bool> RemoveUser(int id);
+        Task<UserTransferCommand> GetUserById(int id);
+        Task<List<UserTransferCommand>> GetUserByName(string name);
     }
 }

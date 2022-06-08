@@ -13,5 +13,9 @@ namespace Domain.IRepositories
         Task<User> GetRegisterModel(string login);
         Task CreateUser(User user);
         Task<List<User>> GetUsers();
+        Task UpdateUser(User user);
+        Task RemoveUser(int id);
+        Task<User> GetUserById(int id);
+        Task<List<User>> GetUserByName(string name);
     }
 }

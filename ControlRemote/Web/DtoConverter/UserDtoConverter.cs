@@ -39,5 +39,36 @@ namespace Web.DtoConverter
                 Role = "user",
             };
         }
+
+        public static UserCreateCommand UserCreateModelConvertToUserCreateCommand(UserCreateModel userModel)
+        {
+            if(userModel == null)
+            {
+                return null;
+            }
+            return new UserCreateCommand
+            {
+                Name = userModel.Name,
+                Login = userModel.Login,
+                Password = userModel.Password,
+                Role = userModel.Role,
+            };
+        }
+
+        public static UserUpdateCommand UserUpdateModelConvertToUserUpdateCommand(UserUpdateModel userModel)
+        {
+            if(userModel == null)
+            {
+                return null;
+            }
+            return new UserUpdateCommand
+            {
+                Id = userModel.Id,
+                Name = userModel.Name,
+                Login = userModel.Login,
+                Password = userModel.Password,
+                Role = userModel.Role,
+            };
+        }
     }
 }

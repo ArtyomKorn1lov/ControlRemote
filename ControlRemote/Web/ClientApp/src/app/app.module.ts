@@ -13,6 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { DialogRegComponent } from './dialog-reg/dialog-reg.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { UserCreateComponent } from './user-create/user-create.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { UserListComponent } from './user-list/user-list.component';
     MainPageComponent,
     DialogAuthComponent,
     DialogRegComponent,
-    UserListComponent
+    UserListComponent,
+    UserCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import { UserListComponent } from './user-list/user-list.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: MainPageComponent },
-      { path: 'user', component: UserListComponent },
+      { path: 'user-list', component: UserListComponent },
+      { path: 'user-create', component: UserCreateComponent },
     ]),
     NoopAnimationsModule,
   ],

@@ -26,8 +26,9 @@ namespace Application.Services
                 if (user != null)
                 {
                     await _userRepository.CreateUser(UserCommandConverter.UserCreateCommandConvertToUserEntity(user));
+                    return true;
                 }
-                return true;
+                return false;
             }
             catch
             {
@@ -77,6 +78,41 @@ namespace Application.Services
             }
         }
 
+        public async Task<UserTransferCommand> GetUserById(int id)
+        {
+            try
+            {
+                UserTransferCommand userCommand = UserCommandConverter.UserEntityConvertToUserTransferCommand(await _userRepository.GetUserById(id));
+                if(userCommand == null)
+                {
+                    return null;
+                }
+                return userCommand;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public async Task<List<UserTransferCommand>> GetUserByName(string name)
+        {
+            try
+            {
+                List<User> usersEntity = await _userRepository.GetUserByName(name);
+                List<UserTransferCommand> userCommands = usersEntity.Select(data => UserCommandConverter.UserEntityConvertToUserTransferCommand(data)).ToList();
+                if (userCommands == null)
+                {
+                    return null;
+                }
+                return userCommands;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<List<UserTransferCommand>> GetUsers()
         {
             try
@@ -92,6 +128,36 @@ namespace Application.Services
             catch
             {
                 return null;
+            }
+        }
+
+        public async Task<bool> RemoveUser(int id)
+        {
+            try
+            {
+                await _userRepository.RemoveUser(id);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateUser(UserUpdateCommand user)
+        {
+            try
+            {
+                if (user != null)
+                {
+                    await _userRepository.UpdateUser(UserCommandConverter.UserUpdateCommandConvertToUserEntity(user));
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

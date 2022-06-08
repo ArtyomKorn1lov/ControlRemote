@@ -5,6 +5,7 @@ import { LoginModel } from '../Dto/LoginModel';
 import { RegisterModel } from '../Dto/RegisterModel';
 import { AuthoriseModel } from '../Dto/AuthoriseModel';
 import { UserModel } from '../Dto/UserModel';
+import { UserCreateModel } from '../Dto/UserCreateModel';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +33,9 @@ export class AccountService {
 
   public GetUsers(): Observable<UserModel[]> {
     return this.http.get<UserModel[]>(`api/account/user-list`);
+  }
+
+  public CreateUser(user: UserCreateModel): Observable<string> {
+    return this.http.post(`api/account/create`, user, { responseType: 'text' })
   }
 }

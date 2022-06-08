@@ -96,10 +96,13 @@ namespace Web.Controllers
                     if (await _userService.GetRegisterResult(model.Login))
                     {
                         UserCreateCommand userCreateCommand = UserDtoConverter.RegisterModelConvertToUserCreateCommand(model);
-                        await _userService.CreateUser(userCreateCommand);
-                        await _unitOfWork.Commit();
-                        await Authenticate(model.Login, userCreateCommand.Role);
-                        return Ok("success");
+                        if(await _userService.CreateUser(userCreateCommand))
+                        {
+                            await _unitOfWork.Commit();
+                            await Authenticate(model.Login, userCreateCommand.Role);
+                            return Ok("success");
+                        }
+                        return Ok("error");
                     }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
                 }
@@ -147,6 +150,106 @@ namespace Web.Controllers
                 return null;
             }
             return user;
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateUser(UserCreateModel user)
+        {
+            try
+            {
+                if(user.Login == _configuration.GetConnectionString("AdminLogin"))
+                {
+                    return Ok("error");
+                }
+                if(await _userService.GetRegisterResult(user.Login))
+                {
+                    UserCreateCommand userCommand = UserDtoConverter.UserCreateModelConvertToUserCreateCommand(user);
+                    if(await _userService.CreateUser(userCommand))
+                    {
+                        await _unitOfWork.Commit();
+                        return Ok("success");
+                    }
+                    return Ok("error");
+                }
+                return Ok("error");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateUser(UserUpdateModel user)
+        {
+            try
+            {
+                if (user.Login == _configuration.GetConnectionString("AdminLogin"))
+                {
+                    return Ok("error");
+                }
+                if (await _userService.GetRegisterResult(user.Login))
+                {
+                    UserUpdateCommand userCommand = UserDtoConverter.UserUpdateModelConvertToUserUpdateCommand(user);
+                    if(await _userService.UpdateUser(userCommand))
+                    {
+                        await _unitOfWork.Commit();
+                        return Ok("success");
+                    }
+                    return Ok("error");
+                }
+                return Ok("error");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpDelete("remove/{id}")]
+        public async Task<IActionResult> RemoveUser(int id)
+        {
+            try
+            {
+                if(await _userService.RemoveUser(id))
+                {
+                    return Ok("success");
+                }
+                return Ok("error");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet("{id}")]
+        public async Task<UserDto> GetUserById(int id)
+        {
+            UserTransferCommand userCommand = await _userService.GetUserById(id);
+            UserDto userDto = UserDtoConverter.UserTransferCommandConvertToUserDto(userCommand);
+            if(userDto == null)
+            {
+                return null;
+            }
+            return userDto;
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet("{name}")]
+        public async Task<List<UserDto>> GetUserByName(string name)
+        {
+            List<UserTransferCommand> userCommands = await _userService.GetUserByName(name);
+            List<UserDto> usersDto = userCommands.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
+            if(usersDto == null)
+            {
+                return null;
+            }
+            return usersDto;
         }
     }
 }

@@ -4,24 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Entity
+namespace Application.Command
 {
-    public class User
+    public class UserUpdateCommand
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-        public List<Employer> Employers { get; set; }
-
-        public void CopyFrom(User user)
-        {
-            Name = user.Name;
-            Login = user.Login;
-            Password = user.Password;
-            Role = user.Role;
-            Employers = user.Employers;
-        }
     }
 }
