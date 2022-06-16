@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     "net5.0": {
+      "Humanizer.Core/2.8.26": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Humanizer.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.SpaServices.Extensions/5.0.13": {
         "type": "package",
         "dependencies": {
@@ -17,7 +26,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Microsoft.CSharp/4.5.0": {
+      "Microsoft.CSharp/4.7.0": {
         "type": "package",
         "compile": {
           "ref/netcoreapp2.0/_._": {}
@@ -129,6 +138,23 @@
         },
         "runtime": {
           "lib/netstandard2.0/_._": {}
+        }
+      },
+      "Microsoft.EntityFrameworkCore.Design/5.0.9": {
+        "type": "package",
+        "dependencies": {
+          "Humanizer.Core": "2.8.26",
+          "Microsoft.CSharp": "4.7.0",
+          "Microsoft.EntityFrameworkCore.Relational": "5.0.9"
+        },
+        "compile": {
+          "lib/netstandard2.1/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Design.dll": {}
+        },
+        "build": {
+          "build/netcoreapp3.0/Microsoft.EntityFrameworkCore.Design.props": {}
         }
       },
       "Microsoft.EntityFrameworkCore.Relational/5.0.9": {
@@ -1575,6 +1601,22 @@
     }
   },
   "libraries": {
+    "Humanizer.Core/2.8.26": {
+      "sha512": "OiKusGL20vby4uDEswj2IgkdchC1yQ6rwbIkZDVBPIR6al2b7n3pC91elBul9q33KaBgRKhbZH3+2Ur4fnWx2A==",
+      "type": "package",
+      "path": "humanizer.core/2.8.26",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "humanizer.core.2.8.26.nupkg.sha512",
+        "humanizer.core.nuspec",
+        "lib/netstandard1.0/Humanizer.dll",
+        "lib/netstandard1.0/Humanizer.xml",
+        "lib/netstandard2.0/Humanizer.dll",
+        "lib/netstandard2.0/Humanizer.xml",
+        "logo.png"
+      ]
+    },
     "Microsoft.AspNetCore.SpaServices.Extensions/5.0.13": {
       "sha512": "8PZzI+K5MxYOoX9WjtoCjjYhAzGno0w4rz9SGP3J/jYhBCxTKF8LlH0NwEuDSK1odx79lxNdC7LD7nXDLoawUw==",
       "type": "package",
@@ -1589,10 +1631,10 @@
         "microsoft.aspnetcore.spaservices.extensions.nuspec"
       ]
     },
-    "Microsoft.CSharp/4.5.0": {
-      "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
+    "Microsoft.CSharp/4.7.0": {
+      "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "type": "package",
-      "path": "microsoft.csharp/4.5.0",
+      "path": "microsoft.csharp/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1605,6 +1647,7 @@
         "lib/netcoreapp2.0/_._",
         "lib/netstandard1.3/Microsoft.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CSharp.dll",
+        "lib/netstandard2.0/Microsoft.CSharp.xml",
         "lib/portable-net45+win8+wp8+wpa81/_._",
         "lib/uap10.0.16299/_._",
         "lib/win8/_._",
@@ -1614,7 +1657,7 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
-        "microsoft.csharp.4.5.0.nupkg.sha512",
+        "microsoft.csharp.4.7.0.nupkg.sha512",
         "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
@@ -1778,6 +1821,21 @@
         "lib/netstandard2.0/_._",
         "microsoft.entityframeworkcore.analyzers.5.0.9.nupkg.sha512",
         "microsoft.entityframeworkcore.analyzers.nuspec"
+      ]
+    },
+    "Microsoft.EntityFrameworkCore.Design/5.0.9": {
+      "sha512": "eNf6vkQAdVkYMEADUrXTPtlgxw7EwkbU8jyaOEdz3J/3JFz2yzdVIwJg66RNMuoqDrktAG1bcR64YEys6DXVFw==",
+      "type": "package",
+      "path": "microsoft.entityframeworkcore.design/5.0.9",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "build/netcoreapp3.0/Microsoft.EntityFrameworkCore.Design.props",
+        "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Design.dll",
+        "lib/netstandard2.1/Microsoft.EntityFrameworkCore.Design.xml",
+        "microsoft.entityframeworkcore.design.5.0.9.nupkg.sha512",
+        "microsoft.entityframeworkcore.design.nuspec"
       ]
     },
     "Microsoft.EntityFrameworkCore.Relational/5.0.9": {
@@ -5879,23 +5937,24 @@
       "Application >= 1.0.0",
       "Domain >= 1.0.0",
       "Infrastructure >= 1.0.0",
-      "Microsoft.AspNetCore.SpaServices.Extensions >= 5.0.13"
+      "Microsoft.AspNetCore.SpaServices.Extensions >= 5.0.13",
+      "Microsoft.EntityFrameworkCore.Design >= 5.0.9"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Duke\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Web\\Web.csproj",
+      "projectUniqueName": "C:\\Angular\\ControlRemote\\ControlRemote\\Web\\Web.csproj",
       "projectName": "Web",
-      "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Web\\Web.csproj",
-      "packagesPath": "C:\\Users\\Duke\\.nuget\\packages\\",
-      "outputPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Web\\obj\\",
+      "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Web\\Web.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Web\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Duke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -5909,14 +5968,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj": {
-              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj"
+            "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\Application.csproj": {
+              "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\Application.csproj"
             },
-            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj"
+            "C:\\Angular\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj"
             },
-            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Angular\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
@@ -5934,6 +5993,12 @@
           "Microsoft.AspNetCore.SpaServices.Extensions": {
             "target": "Package",
             "version": "[5.0.13, )"
+          },
+          "Microsoft.EntityFrameworkCore.Design": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[5.0.9, )"
           }
         },
         "imports": [
@@ -5954,7 +6019,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

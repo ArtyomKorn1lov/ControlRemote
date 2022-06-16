@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "81eSg3lfb29nKAL3W4zjOAM1b12ENayl9IgtCdkE1sQe40EYDFKUlIoXYqVMdLdm1Jy0sfCGDzOIHWC243rYzA==",
+  "dgSpecHash": "qdG2YWLaYHKtJN8yjCuBA7pi18eW8zp76zQb++yGGrCu/mN5UYfjlBrcTHwmwKfg/GXS+FsoYNTIXe8MdJY1jg==",
   "success": true,
-  "projectFilePath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

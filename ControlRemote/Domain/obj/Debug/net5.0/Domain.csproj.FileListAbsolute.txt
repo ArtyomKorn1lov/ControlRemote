@@ -10,3 +10,15 @@ C:\Данные\Система слежки за сотрудниками\Contro
 C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.dll
 C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\ref\Domain.dll
 C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.pdb
+C:\Angular\ControlRemote\ControlRemote\Domain\bin\Debug\net5.0\Domain.deps.json
+C:\Angular\ControlRemote\ControlRemote\Domain\bin\Debug\net5.0\Domain.dll
+C:\Angular\ControlRemote\ControlRemote\Domain\bin\Debug\net5.0\ref\Domain.dll
+C:\Angular\ControlRemote\ControlRemote\Domain\bin\Debug\net5.0\Domain.pdb
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.csproj.AssemblyReference.cache
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.AssemblyInfoInputs.cache
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.AssemblyInfo.cs
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.csproj.CoreCompileInputs.cache
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.dll
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\ref\Domain.dll
+C:\Angular\ControlRemote\ControlRemote\Domain\obj\Debug\net5.0\Domain.pdb

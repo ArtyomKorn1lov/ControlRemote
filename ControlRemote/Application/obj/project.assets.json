@@ -27,19 +27,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Duke\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
+      "projectUniqueName": "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
       "projectName": "Application",
-      "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
-      "packagesPath": "C:\\Users\\Duke\\.nuget\\packages\\",
-      "outputPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Application\\obj\\",
+      "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\Application.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Duke\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -53,8 +53,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Данные\\Система слежки за сотрудниками\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj"
+            "C:\\Angular\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Angular\\ControlRemote\\ControlRemote\\Domain\\Domain.csproj"
             }
           }
         }
@@ -83,7 +83,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
       }
     }
   }

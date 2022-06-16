@@ -19,6 +19,7 @@ namespace Infrastructure.Configurations
             builder.Property(a => a.UserLogin).IsRequired();
             builder.Property(a => a.DateTimeAction).IsRequired();
             builder.Property(a => a.Station).IsRequired();
+            builder.Property(a => a.FlagImg).IsRequired();
         }
     }
 }

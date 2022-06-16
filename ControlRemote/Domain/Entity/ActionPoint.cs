@@ -12,5 +12,6 @@ namespace Domain.Entity
         public string UserLogin { get; set; }
         public DateTime DateTimeAction { get; set; }
         public string Station { get; set; }
+        public byte FlagImg { get; set; }
     }
 }
