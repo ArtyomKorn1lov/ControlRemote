@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace ControlRemote
 {
@@ -35,6 +36,7 @@ namespace ControlRemote
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
                     options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
                 });
 

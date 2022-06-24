@@ -14,6 +14,8 @@ import { FormsModule } from '@angular/forms';
 import { DialogRegComponent } from './dialog-reg/dialog-reg.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserCreateComponent } from './user-create/user-create.component';
+import { UserInfoComponent } from './user-info/user-info.component';
+import { UserUpdateComponent } from './user-update/user-update.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { UserCreateComponent } from './user-create/user-create.component';
     DialogAuthComponent,
     DialogRegComponent,
     UserListComponent,
-    UserCreateComponent
+    UserCreateComponent,
+    UserInfoComponent,
+    UserUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +39,8 @@ import { UserCreateComponent } from './user-create/user-create.component';
       { path: '', component: MainPageComponent },
       { path: 'user-list', component: UserListComponent },
       { path: 'user-create', component: UserCreateComponent },
+      { path: 'user-info', component: UserInfoComponent },
+      { path: 'user-update', component: UserUpdateComponent },
     ]),
     NoopAnimationsModule,
   ],

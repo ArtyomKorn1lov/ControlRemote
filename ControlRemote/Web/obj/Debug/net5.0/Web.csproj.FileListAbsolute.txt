@@ -144,3 +144,5 @@ C:\Angular\ControlRemote\ControlRemote\Web\obj\Debug\net5.0\Web.pdb
 C:\Angular\ControlRemote\ControlRemote\Web\obj\Debug\net5.0\Web.genruntimeconfig.cache
 C:\Angular\ControlRemote\ControlRemote\Web\bin\Debug\net5.0\Humanizer.dll
 C:\Angular\ControlRemote\ControlRemote\Web\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Web\bin\Debug\net5.0\Humanizer.dll
+C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Web\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll

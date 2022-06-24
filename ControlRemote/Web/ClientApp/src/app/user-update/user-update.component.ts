@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../Services/account.service';
-import { UserCreateModel } from '../Dto/UserCreateModel';
+import { UserUpdateModel } from '../Dto/UserUpdateModel';
+import { UserModel } from '../Dto/UserModel';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-user-create',
-  templateUrl: './user-create.component.html',
-  styleUrls: ['./user-create.component.css']
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrls: ['./user-update.component.css']
 })
-export class UserCreateComponent implements OnInit {
+export class UserUpdateComponent implements OnInit {
 
   public name: string | undefined;
   public login: string | undefined;
   public password: string | undefined;
   public confirm_password: string | undefined;
   public status: string = "user";
-  private targetRoute = "/user-list";
+  private targetRoute = "/user-info";
+  private id: number | undefined;
 
   constructor(private accountService: AccountService, private router: Router) { }
 
-  public CreateUser(): void {
+  public UpdateUser(): void {
+    if(this.id == undefined) {
+      alert("Ошибка получения пользователя, запрос на обновление невозможен");
+      return;
+    }
     if (this.name == undefined || this.name.trim() == '') {
       alert("Введите имя пользователя");
       this.name = '';
@@ -46,36 +52,27 @@ export class UserCreateComponent implements OnInit {
       this.confirm_password = '';
       return;
     }
-    var model = new UserCreateModel(this.name, this.login, this.password, this.status);
-    this.accountService.CreateUser(model).subscribe(data => {
-      if(data == "success") {
+    var model = new UserUpdateModel(this.id, this.name, this.login, this.password, this.status);
+    this.accountService.UpdateUser(model).subscribe(data => {
+      if(data == "error") {
+        alert("Ошибка обновления пользователя");
         console.log(data);
-        alert(data);
-        this.router.navigateByUrl(this.targetRoute);
         return;
       }
-      if(data == "create") {
-        alert("Пользователь с данным логином уже создан");
-        console.log(data);
-        this.name = '';
-        this.login = '';
-        this.password = '';
-        this.confirm_password = '';
-        this.status = "user";
-        return;
-      }
-      alert("Некорректные логин и(или) пароль");
+      alert(data);
       console.log(data);
-      this.name = '';
-      this.login = '';
-      this.password = '';
-      this.confirm_password = '';
-      this.status = "user";
+      this.router.navigateByUrl(this.targetRoute);
       return;
     });
   }
 
-  ngOnInit(): void {
+  public async ngOnInit(): Promise<void> {
+    await this.accountService.GetUserById(this.accountService.GetUserId()).subscribe(data => {
+      this.id = data.id
+      this.name = data.name;
+      this.login = data.login;
+      this.status = data.role;
+    });
   }
 
 }

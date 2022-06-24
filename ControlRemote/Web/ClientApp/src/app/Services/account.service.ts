@@ -6,6 +6,7 @@ import { RegisterModel } from '../Dto/RegisterModel';
 import { AuthoriseModel } from '../Dto/AuthoriseModel';
 import { UserModel } from '../Dto/UserModel';
 import { UserCreateModel } from '../Dto/UserCreateModel';
+import { UserUpdateModel } from '../Dto/UserUpdateModel';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,18 @@ import { UserCreateModel } from '../Dto/UserCreateModel';
 export class AccountService {
 
   constructor(private http: HttpClient) { }
+
+  public PushUserId(id: number): void {
+    sessionStorage.setItem('UserId', id.toString());
+  }
+
+  public GetUserId(): number {
+    var key = sessionStorage.getItem('UserId');
+    if (key == null) {
+      return 0;
+    }
+    return parseInt(key);
+  }
 
   public Registration(user: RegisterModel): Observable<string> {
     return this.http.post(`api/account/register`, user, { responseType: 'text' });
@@ -36,6 +49,22 @@ export class AccountService {
   }
 
   public CreateUser(user: UserCreateModel): Observable<string> {
-    return this.http.post(`api/account/create`, user, { responseType: 'text' })
+    return this.http.post(`api/account/create`, user, { responseType: 'text' });
+  }
+
+  public UpdateUser(user: UserUpdateModel): Observable<string> {
+    return this.http.put(`api/account/update`, user, { responseType: 'text' });
+  }
+
+  public DeleteUser(id: number): Observable<string> {
+    return this.http.delete(`api/account/remove/${id}`, { responseType: 'text' });
+  }
+
+  public GetUserById(id: number): Observable<UserModel> {
+    return this.http.get<UserModel>(`api/account/by-id/${id}`);
+  }
+
+  public GetUserByName(name: string): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(`api/account/by-name/${name}`);
   }
 }

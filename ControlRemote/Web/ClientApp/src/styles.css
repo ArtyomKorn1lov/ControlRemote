@@ -228,5 +228,16 @@ a {
     margin-bottom: 15px;
 }
 
+.button-block + .form-location {
+    margin-top: 30px;
+}
+
+.title-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
 /*html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/

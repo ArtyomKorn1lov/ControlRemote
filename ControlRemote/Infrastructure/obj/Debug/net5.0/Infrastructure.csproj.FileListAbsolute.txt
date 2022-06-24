@@ -35,3 +35,6 @@ C:\Angular\ControlRemote\ControlRemote\Infrastructure\obj\Debug\net5.0\Infrastru
 C:\Angular\ControlRemote\ControlRemote\Infrastructure\obj\Debug\net5.0\ref\Infrastructure.dll
 C:\Angular\ControlRemote\ControlRemote\Infrastructure\obj\Debug\net5.0\Infrastructure.pdb
 C:\Angular\ControlRemote\ControlRemote\Infrastructure\obj\Debug\net5.0\Infrastructure.genruntimeconfig.cache
+C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Infrastructure\bin\Debug\net5.0\Infrastructure.runtimeconfig.json
+C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Infrastructure\bin\Debug\net5.0\Infrastructure.runtimeconfig.dev.json
+C:\Данные\Система слежки за сотрудниками\ControlRemote\ControlRemote\Infrastructure\obj\Debug\net5.0\Infrastructure.genruntimeconfig.cache

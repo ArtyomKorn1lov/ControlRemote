@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../Services/account.service';
 import { UserModel } from '../Dto/UserModel';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -9,9 +10,22 @@ import { UserModel } from '../Dto/UserModel';
 })
 export class UserListComponent implements OnInit {
 
+  private targetRoute: string = "/user-info";
   public users: UserModel[] = [];
+  public name: string = "";
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private router: Router) { }
+
+  public FindByName(): void {
+    this.accountService.GetUserByName(this.name).subscribe(data => {
+      this.users = data;
+    });
+  }
+
+  public GetUserInfo(id: number): void {
+    this.accountService.PushUserId(id);
+    this.router.navigateByUrl(this.targetRoute);
+  }
 
   public async ngOnInit(): Promise<void> {
     await this.accountService.GetUsers().subscribe(data => {

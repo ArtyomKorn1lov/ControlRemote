@@ -96,7 +96,7 @@ namespace Web.Controllers
                     if (await _userService.GetRegisterResult(model.Login))
                     {
                         UserCreateCommand userCreateCommand = UserDtoConverter.RegisterModelConvertToUserCreateCommand(model);
-                        if(await _userService.CreateUser(userCreateCommand))
+                        if (await _userService.CreateUser(userCreateCommand))
                         {
                             await _unitOfWork.Commit();
                             await Authenticate(model.Login, userCreateCommand.Role);
@@ -145,7 +145,7 @@ namespace Web.Controllers
         {
             List<UserTransferCommand> usersTransferCommand = await _userService.GetUsers();
             List<UserDto> user = usersTransferCommand.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
@@ -158,14 +158,14 @@ namespace Web.Controllers
         {
             try
             {
-                if(user.Login == _configuration.GetConnectionString("AdminLogin"))
+                if (user.Login == _configuration.GetConnectionString("AdminLogin"))
                 {
                     return Ok("error");
                 }
-                if(await _userService.GetRegisterResult(user.Login))
+                if (await _userService.GetRegisterResult(user.Login))
                 {
                     UserCreateCommand userCommand = UserDtoConverter.UserCreateModelConvertToUserCreateCommand(user);
-                    if(await _userService.CreateUser(userCommand))
+                    if (await _userService.CreateUser(userCommand))
                     {
                         await _unitOfWork.Commit();
                         return Ok("success");
@@ -190,15 +190,20 @@ namespace Web.Controllers
                 {
                     return Ok("error");
                 }
-                if (await _userService.GetRegisterResult(user.Login))
+                UserDto getUser = UserDtoConverter.UserTransferCommandConvertToUserDto(await _userService.GetUserById(user.Id));
+                if (getUser == null)
                 {
-                    UserUpdateCommand userCommand = UserDtoConverter.UserUpdateModelConvertToUserUpdateCommand(user);
-                    if(await _userService.UpdateUser(userCommand))
-                    {
-                        await _unitOfWork.Commit();
-                        return Ok("success");
-                    }
                     return Ok("error");
+                }
+                if (!await _userService.GetRegisterResult(user.Login) && getUser.Login != user.Login)
+                {
+                    return Ok("error");
+                }
+                UserUpdateCommand userCommand = UserDtoConverter.UserUpdateModelConvertToUserUpdateCommand(user);
+                if (await _userService.UpdateUser(userCommand))
+                {
+                    await _unitOfWork.Commit();
+                    return Ok("success");
                 }
                 return Ok("error");
             }
@@ -214,8 +219,9 @@ namespace Web.Controllers
         {
             try
             {
-                if(await _userService.RemoveUser(id))
+                if (await _userService.RemoveUser(id))
                 {
+                    await _unitOfWork.Commit();
                     return Ok("success");
                 }
                 return Ok("error");
@@ -227,12 +233,12 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("{id}")]
+        [HttpGet("by-id/{id}")]
         public async Task<UserDto> GetUserById(int id)
         {
             UserTransferCommand userCommand = await _userService.GetUserById(id);
             UserDto userDto = UserDtoConverter.UserTransferCommandConvertToUserDto(userCommand);
-            if(userDto == null)
+            if (userDto == null)
             {
                 return null;
             }
@@ -240,12 +246,12 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("{name}")]
+        [HttpGet("by-name/{name}")]
         public async Task<List<UserDto>> GetUserByName(string name)
         {
             List<UserTransferCommand> userCommands = await _userService.GetUserByName(name);
             List<UserDto> usersDto = userCommands.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
-            if(usersDto == null)
+            if (usersDto == null)
             {
                 return null;
             }
