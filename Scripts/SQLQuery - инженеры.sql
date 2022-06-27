@@ -61,7 +61,7 @@ SELECT Station + ' -> ' + UserLogin СтанцияЛогин, DAY(DateTimeAction
   IIF(SUM(IIF(DATEPART(MI, DateTimeAction) = 58, 1,0)) = 1, 'X', ' ') М59,
   IIF(SUM(IIF(DATEPART(MI, DateTimeAction) = 59, 1,0)) = 1, 'X', ' ') М60
   FROM [ControlRemote].[dbo].[ActionPoint]
-  WHERE DateTimeAction >= '20220511' AND DateTimeAction < '20220516' AND
+  WHERE DateTimeAction >= '20210101' AND DateTimeAction < '20220629' AND
     (UserLogin LIKE 'RICTELECOM\pavel' OR
 	UserLogin LIKE 'RICTELECOM\mpush' OR
 	UserLogin LIKE 'RICTELECOM\MuhinaM' OR
