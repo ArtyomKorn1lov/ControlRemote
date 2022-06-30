@@ -9,10 +9,11 @@ namespace Domain.IRepositories
 {
     public interface IEmployerRepository
     {
-        Task<List<User>> GetAll();
-        Task<User> GetById(int id);
-        Task Create(User employer);
-        Task Update(User employer);
+        Task<List<Employer>> GetAll();
+        Task<Employer> GetById(int id);
+        Task<List<Employer>> GetByName(string name);
+        Task Create(Employer employer);
+        Task Update(Employer employer);
         Task Delete(int id);
     }
 }

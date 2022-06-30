@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Command
 {
-    public class EmployerCommand
+    public class EmployerCreateCommand
     {
-        public int Id { get; set; }
         public int ManagerId { get; set; }
         public string Name { get; set; }
         public string Login { get; set; }

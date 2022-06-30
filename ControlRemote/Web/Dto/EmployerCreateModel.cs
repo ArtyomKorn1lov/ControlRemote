@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace Web.Dto
 {
-    public class EmployerDto
+    public class EmployerCreateModel
     {
-        public int Id { get; set; }
         public int ManagerId { get; set; }
         public string Name { get; set; }
         public string Login { get; set; }

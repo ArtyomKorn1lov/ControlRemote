@@ -141,10 +141,10 @@ namespace Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("user-list")]
-        public async Task<List<UserDto>> GetUsers()
+        public async Task<List<UserModel>> GetUsers()
         {
             List<UserTransferCommand> usersTransferCommand = await _userService.GetUsers();
-            List<UserDto> user = usersTransferCommand.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
+            List<UserModel> user = usersTransferCommand.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
             if (user == null)
             {
                 return null;
@@ -190,7 +190,7 @@ namespace Web.Controllers
                 {
                     return Ok("error");
                 }
-                UserDto getUser = UserDtoConverter.UserTransferCommandConvertToUserDto(await _userService.GetUserById(user.Id));
+                UserModel getUser = UserDtoConverter.UserTransferCommandConvertToUserDto(await _userService.GetUserById(user.Id));
                 if (getUser == null)
                 {
                     return Ok("error");
@@ -234,10 +234,10 @@ namespace Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("by-id/{id}")]
-        public async Task<UserDto> GetUserById(int id)
+        public async Task<UserModel> GetUserById(int id)
         {
             UserTransferCommand userCommand = await _userService.GetUserById(id);
-            UserDto userDto = UserDtoConverter.UserTransferCommandConvertToUserDto(userCommand);
+            UserModel userDto = UserDtoConverter.UserTransferCommandConvertToUserDto(userCommand);
             if (userDto == null)
             {
                 return null;
@@ -247,10 +247,10 @@ namespace Web.Controllers
 
         [Authorize(Roles = "admin")]
         [HttpGet("by-name/{name}")]
-        public async Task<List<UserDto>> GetUserByName(string name)
+        public async Task<List<UserModel>> GetUserByName(string name)
         {
             List<UserTransferCommand> userCommands = await _userService.GetUserByName(name);
-            List<UserDto> usersDto = userCommands.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
+            List<UserModel> usersDto = userCommands.Select(data => UserDtoConverter.UserTransferCommandConvertToUserDto(data)).ToList();
             if (usersDto == null)
             {
                 return null;

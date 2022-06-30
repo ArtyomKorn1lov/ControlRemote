@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Application;
+using Application.Services;
+using Application.Command;
+using Web.DtoConverter;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,90 +16,101 @@ namespace ControlRemote.Controllers
     [Route("api/employer")]
     public class EmployerController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+        private IUnitOfWork _unitOfWork;
+        private IEmployerService _employerService;
+
+        public EmployerController(IUnitOfWork unitOfWork, IEmployerService employerService)
         {
-            return View();
+            _unitOfWork = unitOfWork;
+            _employerService = employerService;
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
+        [HttpGet("employer-list")]
+        public async Task<List<EmployerModel>> GetEmployers()
         {
-            return View();
-        }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpGet("id")]
-        public EmployerDto GetAll()
-        {
-            return new EmployerDto
+            List<EmployerTransferCommand> employersCommands = await _employerService.GetAll();
+            List<EmployerModel> employersModels = employersCommands.Select(data => EmployerDtoConverter.EmployerTransferCommandConvertToEmployerModel(data)).ToList();
+            if(employersModels == null)
             {
-                Id = 1,
-                ManagerId = 1,
-                Name = "1",
-                Login = "1"
-            };
+                return null;
+            }
+            return employersModels;
         }
 
-        // POST: UserController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [HttpGet("by-id/{id}")]
+        public async Task<EmployerModel> GetEmployerById(int id)
+        {
+            EmployerModel employer = EmployerDtoConverter.EmployerTransferCommandConvertToEmployerModel(await _employerService.GetById(id));
+            if(employer == null)
+            {
+                return null;
+            }
+            return employer;
+        }
+
+        [HttpGet("by-name/{name}")]
+        public async Task<List<EmployerModel>> GetEmployersByName(string name)
+        {
+            List<EmployerTransferCommand> employersCommands = await _employerService.GetByName(name);
+            List<EmployerModel> employersModels = employersCommands.Select(data => EmployerDtoConverter.EmployerTransferCommandConvertToEmployerModel(data)).ToList();
+            if (employersModels == null)
+            {
+                return null;
+            }
+            return employersModels;
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreateEmployer(EmployerCreateModel employer)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(await _employerService.Create(EmployerDtoConverter.EmployerCreateModelConvertToEmployerCreateCommand(employer)))
+                {
+                    await _unitOfWork.Commit();
+                    return Ok("success");
+                }
+                return Ok("error");
             }
             catch
             {
-                return View();
+                return BadRequest("error");
             }
         }
 
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPut("update")]
+        public async Task<IActionResult> UpdateEmployer(EmployerModel employer)
         {
-            return View();
+            try
+            { 
+                if(await _employerService.Update(EmployerDtoConverter.EmployerModelConvertToEmployerTransferCommand(employer)))
+                {
+                    await _unitOfWork.Commit();
+                    return Ok("success");
+                }
+                return Ok("error");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
         }
 
-        // POST: UserController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [HttpDelete("remove/{id}")]
+        public async Task<IActionResult> RemoveEmployer(int id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                if(await _employerService.Delete(id))
+                {
+                    await _unitOfWork.Commit();
+                    return Ok("success");
+                }
+                return Ok("error");
             }
             catch
             {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: UserController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                return BadRequest("error");
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Domain.Entity;
 using Domain.IRepositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,29 +11,43 @@ namespace Infrastructure.Repositories
 {
     public class EmployerRepository : IEmployerRepository
     {
-        public Task Create(User employer)
+        private ControlRemoteDbContext _controlRemoteDbContext;
+
+        public EmployerRepository(ControlRemoteDbContext controlRemoteDbContext)
         {
-            throw new NotImplementedException();
+            _controlRemoteDbContext = controlRemoteDbContext;
         }
 
-        public Task Delete(int id)
+        public async Task Create(Employer employer)
         {
-            throw new NotImplementedException();
+            await _controlRemoteDbContext.Set<Employer>().AddAsync(employer);
         }
 
-        public Task<List<User>> GetAll()
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Employer employer = await GetById(id);
+            if (employer != null)
+                _controlRemoteDbContext.Set<Employer>().Remove(employer);
         }
 
-        public Task<User> GetById(int id)
+        public async Task<List<Employer>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _controlRemoteDbContext.Set<Employer>().ToListAsync();
         }
 
-        public Task Update(User employer)
+        public async Task<Employer> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _controlRemoteDbContext.Set<Employer>().FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task<List<Employer>> GetByName(string name)
+        {
+            return await _controlRemoteDbContext.Set<Employer>().Where(e => EF.Functions.Like(e.Name, name)).ToListAsync();
+        }
+
+        public async Task Update(Employer employer)
+        {
+            Employer _employer = await GetById(employer.Id);
         }
     }
 }

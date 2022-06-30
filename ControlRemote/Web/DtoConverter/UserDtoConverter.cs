@@ -10,13 +10,13 @@ namespace Web.DtoConverter
 {
     public static class UserDtoConverter
     {
-        public static UserDto UserTransferCommandConvertToUserDto(UserTransferCommand user)
+        public static UserModel UserTransferCommandConvertToUserDto(UserTransferCommand user)
         {
             if(user == null)
             {
                 return null;
             }
-            return new UserDto
+            return new UserModel
             {
                 Id = user.Id,
                 Name = user.Name,
