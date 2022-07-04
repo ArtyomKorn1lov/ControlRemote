@@ -25,7 +25,7 @@ namespace Application.Services
             {
                 if(employer != null)
                 {
-                    await _employerRepository.Create(EmployerCommandConverter.EmployerCreateConvertToEmployerEntity(employer);
+                    await _employerRepository.Create(EmployerCommandConverter.EmployerCreateConvertToEmployerEntity(employer));
                     return true;
                 }
                 return false;

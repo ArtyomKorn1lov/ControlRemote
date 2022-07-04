@@ -15,16 +15,33 @@ export class AccountService {
 
   constructor(private http: HttpClient) { }
 
+  public PushFlag(flag: number): void {
+    sessionStorage.setItem('UserFlag', flag.toString());
+  }
+
+  public GetUserFlag(): number {
+    let flag = sessionStorage.getItem('UserFlag');
+    if(flag == null) {
+      return 0;
+    }
+    return parseInt(flag);
+  }
+
   public PushUserId(id: number): void {
     sessionStorage.setItem('UserId', id.toString());
   }
 
   public GetUserId(): number {
-    var key = sessionStorage.getItem('UserId');
+    let key = sessionStorage.getItem('UserId');
     if (key == null) {
       return 0;
     }
     return parseInt(key);
+  }
+
+  public ClearParametrs(): void {
+    sessionStorage.removeItem('UserId');
+    sessionStorage.setItem('UserFlag', "0");
   }
 
   public Registration(user: RegisterModel): Observable<string> {

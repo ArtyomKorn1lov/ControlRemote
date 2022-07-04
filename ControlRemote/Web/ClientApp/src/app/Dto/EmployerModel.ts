@@ -1,4 +1,4 @@
-export class EmployerDto {
+export class EmployerModel {
     id: number;
     managerId: number;
     name: string;

@@ -31,7 +31,9 @@ namespace ControlRemote
             services.AddControllers();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IEmployerService, EmployerService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IEmployerRepository, EmployerRepository>();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>

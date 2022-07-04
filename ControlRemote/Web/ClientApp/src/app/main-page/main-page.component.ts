@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogRegComponent } from '../dialog-reg/dialog-reg.component';
-import { EmployerService } from '../Services/employer.service';
 import { AccountService } from '../Services/account.service';
 
 @Component({
@@ -14,14 +13,10 @@ export class MainPageComponent implements OnInit {
   public id: number | undefined;
   public name: string | undefined;
 
-  constructor(public dialog: MatDialog, private employerService: EmployerService, private accountService: AccountService) { }
+  constructor(public dialog: MatDialog, private accountService: AccountService) { }
 
   public openRegDialog(): void {
     const dialogRef = this.dialog.open(DialogRegComponent);
-  }
-
-  public clickId(): void {
-    this.employerService.GetEmployer().subscribe(data => this.id = data.id);
   }
 
   public LogOut(): void {

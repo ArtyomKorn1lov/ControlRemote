@@ -16,6 +16,11 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { UserUpdateComponent } from './user-update/user-update.component';
+import { EmployerListComponent } from './employer-list/employer-list.component';
+import { EmployerCreateComponent } from './employer-create/employer-create.component';
+import { EmployerCreateUsersComponent } from './employer-create-users/employer-create-users.component';
+import { EmployerInfoComponent } from './employer-info/employer-info.component';
+import { EmployerUpdateComponent } from './employer-update/employer-update.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,12 @@ import { UserUpdateComponent } from './user-update/user-update.component';
     UserListComponent,
     UserCreateComponent,
     UserInfoComponent,
-    UserUpdateComponent
+    UserUpdateComponent,
+    EmployerListComponent,
+    EmployerCreateComponent,
+    EmployerCreateUsersComponent,
+    EmployerInfoComponent,
+    EmployerUpdateComponent
   ],
   imports: [
     BrowserModule,
@@ -41,6 +51,10 @@ import { UserUpdateComponent } from './user-update/user-update.component';
       { path: 'user-create', component: UserCreateComponent },
       { path: 'user-info', component: UserInfoComponent },
       { path: 'user-update', component: UserUpdateComponent },
+      { path: 'employer-list', component: EmployerListComponent },
+      { path: 'employer-create', component: EmployerCreateComponent },
+      { path: 'employer-create-users', component: EmployerCreateUsersComponent },
+      { path: 'employer-info', component: EmployerInfoComponent },
     ]),
     NoopAnimationsModule,
   ],

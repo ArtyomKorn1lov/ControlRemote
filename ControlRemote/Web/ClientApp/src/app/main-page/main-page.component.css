@@ -3,3 +3,7 @@
     justify-content: center;
     align-items: center;
 }
+
+.second-variation-bar + .second-variation-bar {
+    margin-left: 30px;
+}

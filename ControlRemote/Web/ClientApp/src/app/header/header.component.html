@@ -1,7 +1,8 @@
 <div class="header-selection">
     <div class="navigation-bar">
         <a [routerLink]="['/']">Главная</a>
-        <a [routerLink]="['/user-list']" *ngIf="status == 'admin'">Сотрудники</a>
+        <a [routerLink]="['/user-list']" *ngIf="status == 'admin'">Пользователи</a>
+        <a [routerLink]="['/employer-list']" *ngIf="status == 'admin'">Сотрудники</a>
         <a *ngIf="status == 'admin' || status == 'manager'">Отчёт</a>
     </div>
     <div class="user-bar">

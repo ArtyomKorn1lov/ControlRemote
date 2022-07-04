@@ -28,6 +28,7 @@ export class UserListComponent implements OnInit {
   }
 
   public async ngOnInit(): Promise<void> {
+    this.accountService.ClearParametrs();
     await this.accountService.GetUsers().subscribe(data => {
       this.users = data;
     });
