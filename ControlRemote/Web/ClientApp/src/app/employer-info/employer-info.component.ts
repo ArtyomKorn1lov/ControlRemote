@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployerModel } from '../Dto/EmployerModel';
 import { EmployerService } from '../Services/employer.service';
+import { AccountService } from '../Services/account.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +12,17 @@ import { Router } from '@angular/router';
 export class EmployerInfoComponent implements OnInit {
 
   private employerListRoute: string = "/employer-list";
+  private employerUpdateRoute: string = "/employer-update";
   public employer: EmployerModel = new EmployerModel(0, 0, "", "");
 
-  constructor(private employerService: EmployerService, private router: Router) { }
+  constructor(private employerService: EmployerService, private accountService: AccountService, private router: Router) { }
+
+  public UpdateEmployer(): void {
+    this.employerService.ClearParametrs();
+    this.accountService.ClearParametrs();
+    this.employerService.PushEmployerId(this.employer.id);
+    this.router.navigateByUrl(this.employerUpdateRoute);
+  }
 
   public RemoveEmployer(): void {
     this.employerService.RemoveEmployer(this.employer.id).subscribe(data => {

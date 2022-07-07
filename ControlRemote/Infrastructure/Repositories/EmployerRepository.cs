@@ -48,6 +48,7 @@ namespace Infrastructure.Repositories
         public async Task Update(Employer employer)
         {
             Employer _employer = await GetById(employer.Id);
+            _employer.CopyFrom(employer);
         }
     }
 }

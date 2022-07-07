@@ -39,9 +39,22 @@ export class AccountService {
     return parseInt(key);
   }
 
+  public PushUrl(targetRoute: string): void {
+    sessionStorage.setItem('UserRoute', targetRoute);
+  }
+
+  public GetUrl(): string {
+    let targetRoute = sessionStorage.getItem('UserRoute');
+    if(targetRoute == null) {
+      return "";
+    }
+    return targetRoute;
+  }
+
   public ClearParametrs(): void {
     sessionStorage.removeItem('UserId');
     sessionStorage.setItem('UserFlag', "0");
+    sessionStorage.removeItem('UserRoute');
   }
 
   public Registration(user: RegisterModel): Observable<string> {

@@ -38,7 +38,7 @@ export class EmployerCreateComponent implements OnInit {
     }
     var employer = new EmployerCreateModel(this.user.id, this.name, this.login);
     this.employerService.CreateEmployer(employer).subscribe(data => {
-      if(data == "success") {
+      if (data == "success") {
         console.log(data);
         alert(data);
         this.router.navigateByUrl(this.employerListRoute);
@@ -51,25 +51,25 @@ export class EmployerCreateComponent implements OnInit {
   }
 
   public ChoiseUser(): void {
-    if(this.name == null || this.name == undefined) {
+    if (this.name == null || this.name == undefined) {
       this.name = "";
     }
-    if(this.login == null || this.login == undefined) {
+    if (this.login == null || this.login == undefined) {
       this.login = "";
     }
     this.employerService.SaveParametrs(this.name, this.login);
+    this.accountService.PushUrl("/employer-create");
     this.router.navigateByUrl(this.employerCreateRoute);
   }
 
   public async ngOnInit(): Promise<void> {
     let name = this.employerService.GetEmployerName();
     let login = this.employerService.GetEmployerLogin();
-    if(name != "" && login != "") {
+    if (name != "" && login != "") {
       this.name = name;
       this.login = login;
     }
-    if(this.accountService.GetUserFlag() == 1)
-    {
+    if (this.accountService.GetUserFlag() == 1) {
       await this.accountService.GetUserById(this.accountService.GetUserId()).subscribe(data => {
         this.user = data;
       });

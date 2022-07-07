@@ -12,7 +12,6 @@ export class EmployerCreateUsersComponent implements OnInit {
 
   public users: UserModel[] = [];
   public name: string = "";
-  private targetRoute = "/employer-create";
 
   constructor(private accountService: AccountService, private router: Router) { }
 
@@ -25,7 +24,7 @@ export class EmployerCreateUsersComponent implements OnInit {
   public ChoiseUser(id: number): void {
     this.accountService.PushFlag(1);
     this.accountService.PushUserId(id);
-    this.router.navigateByUrl(this.targetRoute);
+    this.router.navigateByUrl(this.accountService.GetUrl());
   }
 
   public async ngOnInit(): Promise<void> {

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Web.Dto;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControlRemote.Controllers
 {
@@ -25,6 +26,7 @@ namespace ControlRemote.Controllers
             _employerService = employerService;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("employer-list")]
         public async Task<List<EmployerModel>> GetEmployers()
         {
@@ -37,6 +39,7 @@ namespace ControlRemote.Controllers
             return employersModels;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("by-id/{id}")]
         public async Task<EmployerModel> GetEmployerById(int id)
         {
@@ -48,6 +51,7 @@ namespace ControlRemote.Controllers
             return employer;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet("by-name/{name}")]
         public async Task<List<EmployerModel>> GetEmployersByName(string name)
         {
@@ -60,6 +64,7 @@ namespace ControlRemote.Controllers
             return employersModels;
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateEmployer(EmployerCreateModel employer)
         {
@@ -78,6 +83,7 @@ namespace ControlRemote.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("update")]
         public async Task<IActionResult> UpdateEmployer(EmployerModel employer)
         {
@@ -96,6 +102,7 @@ namespace ControlRemote.Controllers
             }
         }
 
+        [Authorize(Roles = "admin")]
         [HttpDelete("remove/{id}")]
         public async Task<IActionResult> RemoveEmployer(int id)
         {

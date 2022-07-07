@@ -55,6 +55,7 @@ import { EmployerUpdateComponent } from './employer-update/employer-update.compo
       { path: 'employer-create', component: EmployerCreateComponent },
       { path: 'employer-create-users', component: EmployerCreateUsersComponent },
       { path: 'employer-info', component: EmployerInfoComponent },
+      { path: 'employer-update', component: EmployerUpdateComponent },
     ]),
     NoopAnimationsModule,
   ],
