@@ -20,8 +20,7 @@ namespace Web.DtoConverter
             {
                 Id = user.Id,
                 Name = user.Name,
-                Login = user.Login,
-                Role = user.Role
+                Login = user.Login
             };
         }
 
@@ -35,8 +34,7 @@ namespace Web.DtoConverter
             {
                 Name = registerModel.Name,
                 Login = registerModel.Login,
-                Password = registerModel.Password,
-                Role = "user",
+                Password = registerModel.Password
             };
         }
 
@@ -50,8 +48,7 @@ namespace Web.DtoConverter
             {
                 Name = userModel.Name,
                 Login = userModel.Login,
-                Password = userModel.Password,
-                Role = userModel.Role,
+                Password = userModel.Password
             };
         }
 
@@ -66,8 +63,7 @@ namespace Web.DtoConverter
                 Id = userModel.Id,
                 Name = userModel.Name,
                 Login = userModel.Login,
-                Password = userModel.Password,
-                Role = userModel.Role,
+                Password = userModel.Password
             };
         }
     }

@@ -21,7 +21,6 @@ namespace Application.CommandConverter
                 Name = user.Name,
                 Login = user.Login,
                 Password = user.Password,
-                Role = user.Role,
                 Employers = null
             };
         }
@@ -38,7 +37,6 @@ namespace Application.CommandConverter
                 Name = user.Name,
                 Login = user.Login,
                 Password = user.Password,
-                Role = user.Role,
                 Employers = null
             };
         }
@@ -54,7 +52,6 @@ namespace Application.CommandConverter
                 Id = user.Id,
                 Name = user.Name,
                 Login = user.Login,
-                Role = user.Role,
             };
         }
     }

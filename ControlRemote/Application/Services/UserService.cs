@@ -36,24 +36,24 @@ namespace Application.Services
             }
         }
 
-        public async Task<string> GetLoginResult(string login, string password)
+        public async Task<bool> GetLoginResult(string login, string password)
         {
             try
             {
                 if (login == null || password == null)
                 {
-                    return null;
+                    return false;
                 }
                 User user = await _userRepository.GetLoginModel(login, password);
                 if (user == null)
                 {
-                    return null;
+                    return false;
                 }
-                return user.Role;
+                return true;
             }
             catch
             {
-                return null;
+                return true;
             }
         }
 

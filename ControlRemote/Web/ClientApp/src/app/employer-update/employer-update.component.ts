@@ -16,7 +16,7 @@ export class EmployerUpdateComponent implements OnInit {
   private employerCreateRoute: string = "/employer-create-users";
   private id: number | undefined;
   public employer: EmployerModel = new EmployerModel(0, 0, "", "");
-  public user: UserModel = new UserModel(0, "", "", "");
+  public user: UserModel = new UserModel(0, "", "");
   public name: string = "";
   public login: string = "";
 
@@ -51,7 +51,7 @@ export class EmployerUpdateComponent implements OnInit {
     }
     if (this.accountService.GetUserFlag() == 0) {
       alert("Выберете руководителя");
-      this.user = new UserModel(0, "", "", "");
+      this.user = new UserModel(0, "", "");
       return;
     }
     var model = new EmployerModel(this.id, this.user.id, this.name, this.login);

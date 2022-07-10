@@ -14,7 +14,6 @@ export class UserCreateComponent implements OnInit {
   public login: string | undefined;
   public password: string | undefined;
   public confirm_password: string | undefined;
-  public status: string = "user";
   private targetRoute = "/user-list";
 
   constructor(private accountService: AccountService, private router: Router) { }
@@ -46,7 +45,7 @@ export class UserCreateComponent implements OnInit {
       this.confirm_password = '';
       return;
     }
-    var model = new UserCreateModel(this.name, this.login, this.password, this.status);
+    var model = new UserCreateModel(this.name, this.login, this.password);
     this.accountService.CreateUser(model).subscribe(data => {
       if(data == "success") {
         console.log(data);
@@ -61,7 +60,6 @@ export class UserCreateComponent implements OnInit {
         this.login = '';
         this.password = '';
         this.confirm_password = '';
-        this.status = "user";
         return;
       }
       alert("Некорректные логин и(или) пароль");
@@ -70,7 +68,6 @@ export class UserCreateComponent implements OnInit {
       this.login = '';
       this.password = '';
       this.confirm_password = '';
-      this.status = "user";
       return;
     });
   }

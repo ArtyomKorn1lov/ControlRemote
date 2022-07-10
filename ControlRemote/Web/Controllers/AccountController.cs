@@ -51,10 +51,10 @@ namespace Web.Controllers
                         await Authenticate(_configuration.GetConnectionString("AdminLogin"), "admin");
                         return Ok("success");
                     }
-                    string result = await _userService.GetLoginResult(model.Login, model.Password);
-                    if (result != null)
+                    bool result = await _userService.GetLoginResult(model.Login, model.Password);
+                    if (result)
                     {
-                        await Authenticate(model.Login, result);
+                        await Authenticate(model.Login, "manager");
                         return Ok("success");
                     }
                     ModelState.AddModelError("", "Некорректные логин и(или) пароль");
@@ -99,7 +99,7 @@ namespace Web.Controllers
                         if (await _userService.CreateUser(userCreateCommand))
                         {
                             await _unitOfWork.Commit();
-                            await Authenticate(model.Login, userCreateCommand.Role);
+                            await Authenticate(model.Login, "manager");
                             return Ok("success");
                         }
                         return Ok("error");

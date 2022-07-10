@@ -12,7 +12,6 @@ namespace Domain.Entity
         public string Name { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        public string Role { get; set; }
         public List<Employer> Employers { get; set; }
 
         public void CopyFrom(User user)
@@ -20,7 +19,6 @@ namespace Domain.Entity
             Name = user.Name;
             Login = user.Login;
             Password = user.Password;
-            Role = user.Role;
             Employers = user.Employers;
         }
     }

@@ -70,7 +70,7 @@ export class AccountService {
   }
 
   public LogOut(): Observable<string> {
-    var user = new UserModel(0, "", "", "");
+    var user = new UserModel(0, "", "");
     return this.http.post(`api/account/logout`, user, { responseType: 'text' });
   }
 

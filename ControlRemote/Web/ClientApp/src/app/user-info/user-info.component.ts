@@ -12,7 +12,7 @@ export class UserInfoComponent implements OnInit {
 
   private userListRoute: string = "/user-list";
   private userUpdateRoute: string = "/user-update";
-  public user: UserModel = new UserModel(0, '', '', '');
+  public user: UserModel = new UserModel(0, '', '');
 
   constructor(private accountService: AccountService, private router: Router) { }
 

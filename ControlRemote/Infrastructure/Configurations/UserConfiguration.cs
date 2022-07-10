@@ -19,7 +19,6 @@ namespace Infrastructure.Configurations
             builder.Property(m => m.Name).IsRequired();
             builder.Property(m => m.Login).IsRequired();
             builder.Property(m => m.Password).IsRequired();
-            builder.Property(m => m.Role).IsRequired();
             builder.HasMany(m => m.Employers).WithOne().HasForeignKey(e => e.ManagerId).OnDelete(DeleteBehavior.Cascade);
         }
     }

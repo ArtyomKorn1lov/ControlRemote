@@ -15,7 +15,6 @@ export class UserUpdateComponent implements OnInit {
   public login: string | undefined;
   public password: string | undefined;
   public confirm_password: string | undefined;
-  public status: string = "user";
   private targetRoute = "/user-info";
   private id: number | undefined;
 
@@ -52,7 +51,7 @@ export class UserUpdateComponent implements OnInit {
       this.confirm_password = '';
       return;
     }
-    var model = new UserUpdateModel(this.id, this.name, this.login, this.password, this.status);
+    var model = new UserUpdateModel(this.id, this.name, this.login, this.password);
     this.accountService.UpdateUser(model).subscribe(data => {
       if(data == "error") {
         alert("Ошибка обновления пользователя");
@@ -71,7 +70,6 @@ export class UserUpdateComponent implements OnInit {
       this.id = data.id
       this.name = data.name;
       this.login = data.login;
-      this.status = data.role;
     });
   }
 
