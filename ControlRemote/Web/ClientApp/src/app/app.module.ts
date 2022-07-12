@@ -21,6 +21,7 @@ import { EmployerCreateComponent } from './employer-create/employer-create.compo
 import { EmployerCreateUsersComponent } from './employer-create-users/employer-create-users.component';
 import { EmployerInfoComponent } from './employer-info/employer-info.component';
 import { EmployerUpdateComponent } from './employer-update/employer-update.component';
+import { ReportListComponent } from './report-list/report-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { EmployerUpdateComponent } from './employer-update/employer-update.compo
     EmployerCreateComponent,
     EmployerCreateUsersComponent,
     EmployerInfoComponent,
-    EmployerUpdateComponent
+    EmployerUpdateComponent,
+    ReportListComponent
   ],
   imports: [
     BrowserModule,
@@ -56,6 +58,7 @@ import { EmployerUpdateComponent } from './employer-update/employer-update.compo
       { path: 'employer-create-users', component: EmployerCreateUsersComponent },
       { path: 'employer-info', component: EmployerInfoComponent },
       { path: 'employer-update', component: EmployerUpdateComponent },
+      { path: 'report-list', component: ReportListComponent },
     ]),
     NoopAnimationsModule,
   ],

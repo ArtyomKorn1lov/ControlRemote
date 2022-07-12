@@ -27,20 +27,30 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "admin")]
-        [HttpGet("employer-list/{start}/{final}")]
+        [HttpGet("report-list/{start}/{final}")]
         public async Task<List<ActionSortByUserLoginModel>> GetAllForTime(DateTime start, DateTime final)
         {
             List<ActionSortByUserLoginCommand> actionSortByUserLoginCommands = await _requestService.GetAllForTime(start, final);
-            List<ActionSortByUserLoginModel> actionSortByUserLoginModels = actionSortByUserLoginCommands.Select(d => ActionPointDtoConverter.ConvertCommandToModel(d)).ToList();
+            List<ActionSortByUserLoginModel> actionSortByUserLoginModels = actionSortByUserLoginCommands
+                .Select(d => ActionPointDtoConverter.ConvertCommandToModel(d)).ToList();
+            if(actionSortByUserLoginModels == null)
+            {
+                return null;
+            }
             return actionSortByUserLoginModels;
         }
 
         [Authorize(Roles = "admin, manager")]
-        [HttpGet("employer-list{logins}/{start}/{final}")]
+        [HttpGet("report-list{logins}/{start}/{final}")]
         public async Task<List<ActionSortByUserLoginModel>> GetByLoginEmployerForTime(List<string> logins, DateTime start, DateTime final)
         {
             List<ActionSortByUserLoginCommand> actionSortByUserLoginCommands = await _requestService.GetByLoginEmployerForTime(logins, start, final);
-            List<ActionSortByUserLoginModel> actionSortByUserLoginModels = actionSortByUserLoginCommands.Select(d => ActionPointDtoConverter.ConvertCommandToModel(d)).ToList();
+            List<ActionSortByUserLoginModel> actionSortByUserLoginModels = actionSortByUserLoginCommands
+                .Select(d => ActionPointDtoConverter.ConvertCommandToModel(d)).ToList();
+            if (actionSortByUserLoginModels == null)
+            {
+                return null;
+            }
             return actionSortByUserLoginModels;
         }
     }

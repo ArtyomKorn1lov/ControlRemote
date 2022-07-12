@@ -101,12 +101,12 @@ namespace Application.Services
         public List<ActionPointAtTimeCommand> GenerateActionPointAtTimeCommand(List<ActionPointCommand> actionPointCommands)
         {
             List<ActionPointAtTimeCommand> actionPointAtTimeCommands = new List<ActionPointAtTimeCommand>();
-            DateTime hourTime = new DateTime();
+            int hourTime = 0;
             int action_count = 0;
             for(int count = 0; count < HourFormat; count++)
             {
-                hourTime.AddHours(count);
-                if(hourTime.Hour == actionPointCommands[action_count].DateTimeAction.Hour)
+                hourTime = count;
+                if(hourTime == actionPointCommands[action_count].DateTimeAction.Hour)
                 {
                     actionPointAtTimeCommands.Add(new ActionPointAtTimeCommand
                     {
@@ -114,7 +114,10 @@ namespace Application.Services
                         FlagImg = actionPointCommands[action_count].FlagImg,
                         EnableAction = true
                     });
-                    action_count++;
+                    if(action_count + 1 < actionPointCommands.Count)
+                    {
+                        action_count++;
+                    }
                 }
                 else
                 {

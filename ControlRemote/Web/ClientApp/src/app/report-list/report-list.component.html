@@ -1,0 +1,20 @@
+<div class="page-selector">
+    <div class="title-page">
+        <h2>Отчёт</h2>
+    </div>
+    <div class="button-block">
+        <button (click)="CompleteRequest()" class="fisrt-variation-bar">
+            <h1>Выполнить запрос</h1>
+        </button>
+    </div>
+    <div class="form-location">
+        <div class="form-location-object">
+            <h1>Начальная дата:</h1>
+            <input [(ngModel)]="start" class="auth-input" type="date">
+        </div>
+        <div class="form-location-object">
+            <h1>Конечная дата:</h1>
+            <input [(ngModel)]="final" class="auth-input" type="date">
+        </div>
+    </div>
+</div>
