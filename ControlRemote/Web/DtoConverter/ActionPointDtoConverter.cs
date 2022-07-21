@@ -21,11 +21,14 @@ namespace Web.DtoConverter
                 Commands = command.Commands.Select(d => new ActionSortByDateTimeModel
                 {
                     DateTimeAction = d.DateTimeAction,
-                    Commands = d.Commands.Select(d => new ActionPointAtTimeModel 
-                    { 
-                        EnableAction = d.EnableAction,
-                        FlagImg = d.FlagImg,
-                        HourTimeAction = d.HourTimeAction
+                    Commands = d.Commands.Select(d => new ActionSortByHourTimeModel
+                    {
+                        HourTimeAction = d.HourTimeAction,
+                        Commands = d.Commands.Select(d => new ActionPointAtTimeModel 
+                        {
+                            EnableAction = d.EnableAction,
+                            FlagImg = d.FlagImg
+                        }).ToList()
                     }).ToList()
                 }).ToList()
             };

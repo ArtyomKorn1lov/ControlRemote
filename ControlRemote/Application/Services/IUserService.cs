@@ -17,5 +17,6 @@ namespace Application.Services
         Task<bool> RemoveUser(int id);
         Task<UserTransferCommand> GetUserById(int id);
         Task<List<UserTransferCommand>> GetUserByName(string name);
+        Task<List<string>> GetLoginsByUserLogin(string login);
     }
 }

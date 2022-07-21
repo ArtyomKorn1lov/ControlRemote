@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Web.Dto;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ControlRemote.Controllers
 {
@@ -19,11 +20,13 @@ namespace ControlRemote.Controllers
     {
         private IUnitOfWork _unitOfWork;
         private IEmployerService _employerService;
+        private IUserService _userService;
 
-        public EmployerController(IUnitOfWork unitOfWork, IEmployerService employerService)
+        public EmployerController(IUnitOfWork unitOfWork, IEmployerService employerService, IUserService userService)
         {
             _unitOfWork = unitOfWork;
             _employerService = employerService;
+            _userService = userService;
         }
 
         [Authorize(Roles = "admin")]
@@ -119,6 +122,29 @@ namespace ControlRemote.Controllers
             {
                 return BadRequest("error");
             }
+        }
+
+        [Authorize(Roles = "admin, manager")]
+        [HttpGet("by-user-login")]
+        public async Task<List<string>> GetByUserLogin()
+        {
+            string role = HttpContext.User.FindFirstValue(ClaimsIdentity.DefaultRoleClaimType);
+            if (role == null)
+            {
+                return null;
+            }
+            List<string> logins = new List<string>();
+            if (role == "admin")
+            {
+                logins = await _employerService.GetAllLogins();
+                return logins;
+            }
+            logins = await _userService.GetLoginsByUserLogin(HttpContext.User.Identity.Name);
+            if(logins == null)
+            {
+                return null;
+            }
+            return logins;
         }
     }
 }

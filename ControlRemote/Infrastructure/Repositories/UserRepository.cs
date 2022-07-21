@@ -38,9 +38,14 @@ namespace Infrastructure.Repositories
             return await _controlRemoteDbContext.Set<User>().FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task<User> GetUserByLogin(string login)
+        {
+            return await _controlRemoteDbContext.Set<User>().Include(u => u.Employers).FirstOrDefaultAsync(u => u.Login == login);
+        }
+
         public async Task<List<User>> GetUserByName(string name)
         {
-            return await _controlRemoteDbContext.Set<User>().Where(u => EF.Functions.Like(u.Name, name)).ToListAsync();
+            return await _controlRemoteDbContext.Set<User>().Where(u => EF.Functions.Like(u.Name, "%"+name+"%")).ToListAsync();
         }
 
         public async Task<List<User>> GetUsers()

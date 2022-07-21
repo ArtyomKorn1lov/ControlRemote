@@ -63,6 +63,20 @@ namespace Application.Services
             }
         }
 
+        public async Task<List<string>> GetAllLogins()
+        {
+            try
+            {
+                List<Employer> employers = await _employerRepository.GetAll();
+                List<string> logins = employers.Select(data => EmployerCommandConverter.EmployerEntityConvertToLoginList(data)).ToList();
+                return logins;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<EmployerTransferCommand> GetById(int id)
         {
             try

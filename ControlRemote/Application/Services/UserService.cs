@@ -113,6 +113,20 @@ namespace Application.Services
             }
         }
 
+        public async Task<List<string>> GetLoginsByUserLogin(string login)
+        {
+            try
+            {
+                User user = await _userRepository.GetUserByLogin(login);
+                List<string> logins = UserCommandConverter.UserEntityConvertToLogins(user);
+                return logins;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public async Task<List<UserTransferCommand>> GetUsers()
         {
             try

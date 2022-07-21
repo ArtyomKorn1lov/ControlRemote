@@ -12,7 +12,7 @@ namespace Application.Services
 {
     public class RequestService : IRequestService
     {
-        private const int HourFormat = 24;
+        private const int HourFormat = 60;
         private IRequestRepository _requestRepository;
 
         public RequestService(IRequestRepository requestRepository)
@@ -91,26 +91,47 @@ namespace Application.Services
                     actionSortByDateTimeCommands.Add(new ActionSortByDateTimeCommand 
                     {
                         DateTimeAction = actionPointCommands[count].DateTimeAction,
-                        Commands = GenerateActionPointAtTimeCommand(_actionPointCommands)
+                        Commands = GenerateActionSortByHourTimeCommands(_actionPointCommands)
                     });
                 }
             }
             return actionSortByDateTimeCommands;
         }
 
+        public List<ActionSortByHourTimeCommand> GenerateActionSortByHourTimeCommands(List<ActionPointCommand> actionPointCommands)
+        {
+            List<ActionSortByHourTimeCommand> actionSortByHourTimeCommands = new List<ActionSortByHourTimeCommand>();
+            int hourTime = 0;
+            for(int count = 0; count < actionPointCommands.Count; count++)
+            {
+                if(hourTime != actionPointCommands[count].DateTimeAction.Hour 
+                    || (hourTime == 0 && actionPointCommands[count].DateTimeAction.Hour == 0))
+                {
+                    hourTime = actionPointCommands[count].DateTimeAction.Hour;
+                    List<ActionPointCommand> _actionPointCommands = actionPointCommands.Where(d => d.DateTimeAction.Hour == hourTime).ToList();
+                    actionSortByHourTimeCommands.Add(new ActionSortByHourTimeCommand
+                    {
+                        HourTimeAction = actionPointCommands[count].DateTimeAction,
+                        Commands = GenerateActionPointAtTimeCommand(_actionPointCommands)
+                    });
+                }
+            }
+            return actionSortByHourTimeCommands;
+        }
+
         public List<ActionPointAtTimeCommand> GenerateActionPointAtTimeCommand(List<ActionPointCommand> actionPointCommands)
         {
             List<ActionPointAtTimeCommand> actionPointAtTimeCommands = new List<ActionPointAtTimeCommand>();
-            int hourTime = 0;
+            int minuteTime = 0;
             int action_count = 0;
             for(int count = 0; count < HourFormat; count++)
             {
-                hourTime = count;
-                if(hourTime == actionPointCommands[action_count].DateTimeAction.Hour)
+                minuteTime = count;
+                if(minuteTime == actionPointCommands[action_count].DateTimeAction.Minute 
+                    || (minuteTime == 0 && actionPointCommands[action_count].DateTimeAction.Minute == 0))
                 {
                     actionPointAtTimeCommands.Add(new ActionPointAtTimeCommand
                     {
-                        HourTimeAction = actionPointCommands[action_count].DateTimeAction,
                         FlagImg = actionPointCommands[action_count].FlagImg,
                         EnableAction = true
                     });
@@ -123,7 +144,6 @@ namespace Application.Services
                 {
                     actionPointAtTimeCommands.Add(new ActionPointAtTimeCommand
                     {
-                        HourTimeAction = actionPointCommands[action_count].DateTimeAction,
                         FlagImg = actionPointCommands[action_count].FlagImg,
                         EnableAction = false
                     });

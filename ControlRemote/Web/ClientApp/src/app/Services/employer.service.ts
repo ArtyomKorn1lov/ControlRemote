@@ -73,4 +73,8 @@ export class EmployerService {
     return this.http.delete(`api/employer/remove/${id}`, { responseType: 'text' });
   }
 
+  public GetByUserLogin(): Observable<string[]> {
+    return this.http.get<string[]>(`api/employer/by-user-login`);
+  }
+
 }

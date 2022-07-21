@@ -9,6 +9,6 @@ namespace Application.Command
     public class ActionSortByDateTimeCommand
     {
         public DateTime DateTimeAction { get; set; }
-        public List<ActionPointAtTimeCommand> Commands { get; set; }
+        public List<ActionSortByHourTimeCommand> Commands { get; set; }
     }
 }

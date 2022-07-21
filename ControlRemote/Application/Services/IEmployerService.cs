@@ -15,5 +15,6 @@ namespace Application.Services
         Task<bool> Create(EmployerCreateCommand employer);
         Task<bool> Update(EmployerTransferCommand employer);
         Task<bool> Delete(int id);
+        Task<List<string>> GetAllLogins();
     }
 }

@@ -7,7 +7,6 @@ namespace Web.Dto
 {
     public class ActionPointAtTimeModel
     {
-        public DateTime HourTimeAction { get; set; }
         public byte FlagImg { get; set; }
         public bool EnableAction { get; set; }
     }

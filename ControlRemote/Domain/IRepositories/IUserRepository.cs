@@ -17,5 +17,6 @@ namespace Domain.IRepositories
         Task RemoveUser(int id);
         Task<User> GetUserById(int id);
         Task<List<User>> GetUserByName(string name);
+        Task<User> GetUserByLogin(string login);
     }
 }

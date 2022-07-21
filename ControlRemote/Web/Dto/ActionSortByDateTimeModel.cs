@@ -8,6 +8,6 @@ namespace Web.Dto
     public class ActionSortByDateTimeModel
     {
         public DateTime DateTimeAction { get; set; }
-        public List<ActionPointAtTimeModel> Commands { get; set; }
+        public List<ActionSortByHourTimeModel> Commands { get; set; }
     }
 }

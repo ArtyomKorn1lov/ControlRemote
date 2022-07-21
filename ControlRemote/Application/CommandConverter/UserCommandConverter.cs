@@ -54,5 +54,14 @@ namespace Application.CommandConverter
                 Login = user.Login,
             };
         }
+
+        public static List<string> UserEntityConvertToLogins(User user)
+        {
+            if(user == null)
+            {
+                return null;
+            }
+            return user.Employers.Select(d => d.Login).ToList();
+        }
     }
 }

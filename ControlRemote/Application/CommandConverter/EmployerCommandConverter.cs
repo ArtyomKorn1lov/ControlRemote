@@ -53,5 +53,14 @@ namespace Application.CommandConverter
                 Login = employer.Login
             };
         }
+
+        public static string EmployerEntityConvertToLoginList(Employer employer)
+        {
+            if(employer == null)
+            {
+                return null;
+            }
+            return employer.Login;
+        }
     }
 }
