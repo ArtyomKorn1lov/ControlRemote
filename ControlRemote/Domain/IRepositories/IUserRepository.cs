@@ -18,5 +18,6 @@ namespace Domain.IRepositories
         Task<User> GetUserById(int id);
         Task<List<User>> GetUserByName(string name);
         Task<User> GetUserByLogin(string login);
+        Task<User> GetUserIdByLogin(string login);
     }
 }

@@ -18,5 +18,6 @@ namespace Application.Services
         Task<UserTransferCommand> GetUserById(int id);
         Task<List<UserTransferCommand>> GetUserByName(string name);
         Task<List<string>> GetLoginsByUserLogin(string login);
+        Task<int> GetIdByUserLogin(string login);
     }
 }

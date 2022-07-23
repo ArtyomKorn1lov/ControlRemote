@@ -20,6 +20,7 @@ namespace Infrastructure.Configurations
             builder.Property(m => m.Login).IsRequired();
             builder.Property(m => m.Password).IsRequired();
             builder.HasMany(m => m.Employers).WithOne().HasForeignKey(e => e.ManagerId).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(m => m.FileEntities).WithOne().HasForeignKey(f => f.MangerId).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

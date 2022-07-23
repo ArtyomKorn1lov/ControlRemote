@@ -13,6 +13,7 @@ namespace Domain.Entity
         public string Login { get; set; }
         public string Password { get; set; }
         public List<Employer> Employers { get; set; }
+        public List<FileEntity> FileEntities { get; set; }
 
         public void CopyFrom(User user)
         {
@@ -20,6 +21,7 @@ namespace Domain.Entity
             Login = user.Login;
             Password = user.Password;
             Employers = user.Employers;
+            FileEntities = user.FileEntities;
         }
     }
 }

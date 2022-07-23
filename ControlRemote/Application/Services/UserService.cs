@@ -174,5 +174,22 @@ namespace Application.Services
                 return false;
             }
         }
+
+        public async Task<int> GetIdByUserLogin(string login)
+        {
+            try
+            {
+                if(login == null)
+                {
+                    return 0;
+                }
+                User user = await _userRepository.GetUserIdByLogin(login);
+                return user.Id;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
     }
 }
