@@ -4,6 +4,7 @@
         <a [routerLink]="['/user-list']" *ngIf="status == 'admin'">Пользователи</a>
         <a [routerLink]="['/employer-list']" *ngIf="status == 'admin'">Сотрудники</a>
         <a [routerLink]="['/report-list']" *ngIf="status == 'admin' || status == 'manager'">Отчёт</a>
+        <a [routerLink]="['/file-list']" *ngIf="status == 'manager'">Файловые операции</a>
     </div>
     <div class="user-bar">
         <div *ngIf="name == undefined; then thenUserBlock else elseUserBlock"></div>

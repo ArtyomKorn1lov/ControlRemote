@@ -22,6 +22,8 @@ import { EmployerCreateUsersComponent } from './employer-create-users/employer-c
 import { EmployerInfoComponent } from './employer-info/employer-info.component';
 import { EmployerUpdateComponent } from './employer-update/employer-update.component';
 import { ReportListComponent } from './report-list/report-list.component';
+import { FileListComponent } from './file-list/file-list.component';
+import { FileCreateComponent } from './file-create/file-create.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,9 @@ import { ReportListComponent } from './report-list/report-list.component';
     EmployerCreateUsersComponent,
     EmployerInfoComponent,
     EmployerUpdateComponent,
-    ReportListComponent
+    ReportListComponent,
+    FileListComponent,
+    FileCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -59,6 +63,8 @@ import { ReportListComponent } from './report-list/report-list.component';
       { path: 'employer-info', component: EmployerInfoComponent },
       { path: 'employer-update', component: EmployerUpdateComponent },
       { path: 'report-list', component: ReportListComponent },
+      { path: 'file-list', component: FileListComponent },
+      { path: 'file-create', component: FileCreateComponent },
     ]),
     NoopAnimationsModule,
   ],

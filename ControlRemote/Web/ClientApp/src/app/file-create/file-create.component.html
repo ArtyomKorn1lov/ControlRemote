@@ -1,0 +1,23 @@
+<div class="page-selector">
+    <div class="title-page">
+        <h2>Загрузка файла</h2>
+    </div>
+    <div class="button-block">
+        <button [routerLink]="['/file-list']" class="fisrt-variation-bar">
+            <h1>Назад</h1>
+        </button>
+        <button class="second-variation-bar" (click)="DownloadOnServer()">
+            <h1>Загрузить</h1>
+        </button>
+    </div>
+    <div class="form-location">
+        <div class="form-location-object">
+            <h1>Файл:</h1>
+            <button class="second-variation-bar" (click)="UploadFile()">
+                <h1>Выбрать файл</h1>
+            </button>
+            <h1>{{file?.name}}</h1>
+            <input (change)="Download($event)" id="SelectImage" type="file">
+        </div>
+    </div>
+</div>

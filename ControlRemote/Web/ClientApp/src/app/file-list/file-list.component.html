@@ -1,0 +1,27 @@
+<div class="page-selector">
+    <div class="title-page">
+        <h2>Список файлов пользователя</h2>
+    </div>
+    <div class="button-block">
+        <button class="fisrt-variation-bar">
+            <h1>Поиск</h1>
+        </button>
+        <input class="auth-input" type="text" placeholder="Поиск по названию файла" maxlength="100">
+        <button [routerLink]="['/file-create']" class="second-variation-bar">
+            <h1>Добавить новый файл</h1>
+        </button>
+    </div>
+    <div class="object-location">
+        <div class="object">
+            <div class="element">
+                <p>Название файла</p>
+            </div>
+            <div class="element">
+                <p>Удалить</p>
+            </div>
+            <div class="element">
+                <p>Подробнее</p>
+            </div>
+        </div>
+    </div>
+</div>
