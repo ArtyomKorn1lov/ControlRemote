@@ -14,6 +14,9 @@
     <div class="object-location">
         <div class="object">
             <div class="element">
+                <p>Идентификатор</p>
+            </div>
+            <div class="element">
                 <p>Название файла</p>
             </div>
             <div class="element">
@@ -21,6 +24,26 @@
             </div>
             <div class="element">
                 <p>Подробнее</p>
+            </div>
+        </div>
+        <div class="object-list" *ngFor="let file of files">
+            <div class="object">
+                <div class="element">
+                    <p>{{file.id}}</p>
+                </div>
+                <div class="element">
+                    <p>{{file.name}}</p>
+                </div>
+                <div (click)="RemoveFile(file.id)" class="element">
+                    <button class="table-button">
+                        <h1>Удалить</h1>
+                    </button>
+                </div>
+                <div (click)="DownloadFile(file.id, file.name)" class="element">
+                    <button class="table-button">
+                        <h1>Скачать</h1>
+                    </button>
+                </div>
             </div>
         </div>
     </div>

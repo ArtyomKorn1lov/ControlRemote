@@ -33,6 +33,7 @@ namespace ControlRemote
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IEmployerService, EmployerService>();
             services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IFileService, FileService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IEmployerRepository, EmployerRepository>();
             services.AddScoped<IRequestRepository, RequestRepository>();

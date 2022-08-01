@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from '../Services/file.service';
 import { Router } from '@angular/router';
-import { UploadFileModel } from '../Dto/UploadFileModel';
 
 @Component({
   selector: 'app-file-create',
