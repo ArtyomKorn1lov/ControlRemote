@@ -25,4 +25,8 @@ export class FileService {
   public DownloadFile(id: number): Observable<Blob> {
     return this.http.get(`api/file/download/${id}`, { responseType: 'blob' });
   }
+
+  public UpdateFile(uploadFile: FormData): Observable<string> {
+    return this.http.put(`api/file/update`, uploadFile, { responseType: 'text' });
+  } 
 }

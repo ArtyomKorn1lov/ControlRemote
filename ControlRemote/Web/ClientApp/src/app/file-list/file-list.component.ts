@@ -10,6 +10,7 @@ import { FileInfoModel } from '../Dto/FileInfoModel';
 export class FileListComponent implements OnInit {
 
   public files: FileInfoModel[] = [];
+  public fileUpdate: File | undefined;
 
   constructor(private fileService: FileService) { }
 
@@ -35,6 +36,38 @@ export class FileListComponent implements OnInit {
       a.download = name;
       a.click();
       URL.revokeObjectURL(objectUrl);
+      return;
+    });
+  }
+
+  public UploadUpdateFile(): void {
+    document.getElementById("SelectImage")?.click();
+  }
+
+  public Download(event: any): void {
+    this.fileUpdate = event.target.files[0];
+    console.log(this.fileUpdate);
+  }
+
+  public UpdateFile(): void {
+    if(this.fileUpdate == null || this.fileUpdate == undefined)
+    {
+      alert("Не выбран файл");
+      return;
+    }
+    var formData = new FormData();
+    formData.append('file', this.fileUpdate);
+    console.log(formData);
+    this.fileService.UpdateFile(formData).subscribe(data => {
+      if(data == "success") {
+        alert("Файл обновлён успешно");
+        console.log(data);
+        this.fileUpdate = undefined;
+        return;
+      }
+      alert("Ошибка обновления файла");
+      console.log(data);
+      this.fileUpdate = undefined;
       return;
     });
   }

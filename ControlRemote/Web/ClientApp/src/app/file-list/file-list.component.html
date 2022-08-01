@@ -23,7 +23,13 @@
                 <p>Удалить</p>
             </div>
             <div class="element">
-                <p>Подробнее</p>
+                <p>Выбрать файл</p>
+            </div>
+            <div class="element">
+                <p>Обновить</p>
+            </div>
+            <div class="element">
+                <p>Скачать</p>
             </div>
         </div>
         <div class="object-list" *ngFor="let file of files">
@@ -39,6 +45,17 @@
                         <h1>Удалить</h1>
                     </button>
                 </div>
+                <div (click)="UploadUpdateFile()" class="element">
+                    <button class="table-button">
+                        <h1>Выбрать</h1>
+                        <h1>{{fileUpdate?.name}}</h1>
+                    </button>
+                </div>
+                <div (click)="UpdateFile()" class="element">
+                    <button class="table-button">
+                        <h1>Обновить</h1>
+                    </button>
+                </div>
                 <div (click)="DownloadFile(file.id, file.name)" class="element">
                     <button class="table-button">
                         <h1>Скачать</h1>
@@ -46,5 +63,6 @@
                 </div>
             </div>
         </div>
+        <input (change)="Download($event)" id="SelectImage" type="file">
     </div>
 </div>

@@ -109,6 +109,32 @@ namespace Web.Controllers
         }
 
         [Authorize(Roles = "manager")]
+        [HttpPut("update")]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> UpdateFile()
+        {
+            try
+            {
+                IFormFile uploadFile = Request.Form.Files[0];
+                if (uploadFile != null)
+                {
+                    string path = _appEnvironment.WebRootPath + _currentDirectory + uploadFile.FileName;
+                    _fileService.DeleteFile(path);
+                    using (FileStream fileStream = new FileStream(_appEnvironment.WebRootPath + path, FileMode.Create))
+                    {
+                        await uploadFile.CopyToAsync(fileStream);
+                    }
+                    return Ok("success");
+                }
+                return Ok("error");
+            }
+            catch
+            {
+                return BadRequest("error");
+            }
+        }
+
+        [Authorize(Roles = "manager")]
         [HttpGet("download/{id}")]
         public async Task<FileResult> DownloadFile(int id)
         {
